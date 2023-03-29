@@ -1,0 +1,44 @@
+<app-navbar [showButton]="true"></app-navbar>
+
+
+<mat-card class="register-card">
+    <br>
+    <mat-card-title> &nbsp; &nbsp;Just few last details </mat-card-title>
+    <mat-card-subtitle> &nbsp;&nbsp;To help us find the right plan</mat-card-subtitle>
+    <br>
+    
+    <div>
+              <mat-radio-group class="tobacco-radio-group">
+                <h2 class="tobacco-radio-button">&nbsp;&nbsp;&nbsp;Nicotin/Tobacco</h2>
+                <mat-radio-button class="tobacco-radio-button" value="yes">Yes</mat-radio-button>
+                <mat-radio-button class="tobacco-radio-button" value="no" checked>No</mat-radio-button>
+              </mat-radio-group>
+    </div>   
+    <br>
+
+    <div>
+        <div>
+            <h2>&nbsp; &nbsp;Do you have an existing illness or medical history?</h2>
+            <div class="subheading">&nbsp; &nbsp;This helps us find plans that cover your condition and avoid claim rejection</div>
+          <br>
+        </div>
+
+        <div class="border">
+            <mat-checkbox >High Blood Pressure</mat-checkbox>
+        </div>
+        <br>
+          
+        <div  class="border">
+            <mat-checkbox >Diabetes</mat-checkbox>
+        </div>
+
+        <button mat-raised-button color="primary" style="margin-left:12px" type="submit" (click)="moveTob()">Back</button>
+        <button mat-raised-button style="margin-left:440px" color="primary" type="submit" (click)="moveTof()" >Next</button>   
+    </div>
+
+
+
+</mat-card>
+
+
+

@@ -1,0 +1,65 @@
+
+mat-card-title{
+    font-size:  22px;
+    font-weight: 800;
+  }
+
+mat-card-subtitle{
+      font-size: 25px;
+  }
+
+ mat-card-content{
+        margin-left: -12px;
+        font-size: medium;
+        font-weight: bold;
+        text-align: center;
+    }
+
+h2{
+        
+          margin: 0;
+    }
+
+button{
+      margin-top: 50px;
+     margin-bottom: 5px;
+      
+  }
+
+.subheading {
+        font-size: 15px;
+        color: #666;
+      }
+
+.tobacco-radio-group {
+        display: flex;
+        flex-direction: row;
+      }
+      
+.tobacco-radio-button {
+        margin-right: 10px;
+      }
+
+.border{
+        border-radius: 8px;
+        border: 1px solid rgb(20, 19, 19);
+        padding: 8px;
+        width: 500px;
+        margin-left: 5px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+      }
+      
+
+ 
+
+.register-card {
+        top: 50px;
+        max-width: 600px;
+        left: 600px;
+        right: 20px;
+        border: 1px solid black;
+      }
+      
+      
+      

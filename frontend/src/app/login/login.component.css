@@ -1,0 +1,34 @@
+.register-card {
+    top: 80px;
+    max-width: 400px;
+    left: 700px;
+    right: 20px;
+    border: 1px solid black;
+    border-radius: 10px; overflow: hidden;;
+  }
+
+.register-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 90%;
+  }
+
+ 
+
+.title{
+    margin-left: 60px;
+  }
+
+.align{
+    margin-left: 60px ;
+  }
+
+button{
+    margin-left: 130px;
+
+  }
+
+
+
+
+

@@ -1,0 +1,49 @@
+.register-card {
+    top: 50px;
+    max-width: 600px;
+    left: 600px;
+    right: 20px;
+    border: 1px solid black;
+    height: 77vh;
+  }
+
+  .register-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 90%;
+  }
+
+  .register-container mat-form-field + mat-form-field {
+    margin-left: 30px;
+    
+  }
+
+  .rigt-side{
+    width: 235px;
+  }
+
+  .right-alone{
+    width: 170px;
+  }
+  
+  .submit-button {
+    left: 525px;
+    bottom: 0px;
+    right: 35px;
+  }
+
+  .reduce{
+    width: 235px;
+  }
+
+
+  .together{
+    width:130px;
+    
+  }
+  
+  
+  
+  
+  
+  
