@@ -2,12 +2,13 @@
     flex: 1 1 auto;
 }
 
-mat-toolbar {
+.mat-toolbar {
     
-    background-color: white;
-    color: blue;
+    background-color: #495e99;
+    color: #f6f7f8;
     box-shadow: 0 0 5px 1px black;
-   
+    
+    font-weight: bold;
 
   
 }

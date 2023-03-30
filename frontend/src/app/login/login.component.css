@@ -1,11 +1,13 @@
 .register-card {
-    top: 80px;
+    top: -340px;
     max-width: 400px;
     left: 700px;
     right: 20px;
     border: 1px solid black;
     border-radius: 10px; overflow: hidden;;
-  }
+    background-color:#e9e7e7;
+    
+    }
 
 .register-form {
     min-width: 150px;
@@ -28,7 +30,8 @@ button{
 
   }
 
-
-
-
+  .card{
+    margin-top: 150px;
+    margin-left: 30px;
+}
 

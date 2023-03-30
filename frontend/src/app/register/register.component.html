@@ -1,7 +1,9 @@
 <app-navbar [showButton]="true"></app-navbar>
 
 <mat-card class="register-card">
-    <mat-card-title> &nbsp; &nbsp; Register Now</mat-card-title>
+  <br/>
+    <mat-card-title style="text-align: center;">Register Now</mat-card-title>
+    <br/>
     <form [formGroup]="form"  class="register-form" (ngSubmit)="onSubmit()" >
 
 
@@ -34,7 +36,7 @@
             </mat-form-field>
           
             <mat-form-field appearance="fill">
-                <mat-label>Mobile</mat-label>
+                <mat-label>Mobile Number</mat-label>
                 <span matPrefix>+91 &nbsp;</span>
                 <input type="tel" matInput  formControlName="mobileNumber">
                 <mat-error *ngIf="form.get('mobileNumber')?.hasError('required')">
@@ -90,10 +92,10 @@
             </mat-form-field>
           
             <mat-form-field class="rigt-side" appearance="fill">
-              <mat-label>AadhaarNo</mat-label>
+              <mat-label>Aadhar Number</mat-label>
               <input matInput placeholder="0000-0000-0000" formControlName="govId">
               <mat-error *ngIf="form.get('govId')?.hasError('required')"> Required.</mat-error>
-              <mat-error *ngIf="form.get('govId')?.hasError('pattern')">Enter a valid Aadhar No.</mat-error>
+              <mat-error *ngIf="form.get('govId')?.hasError('pattern')">Enter a valid Aadhar Number</mat-error>
             </mat-form-field>
           </div>
 
@@ -107,7 +109,7 @@
               <mat-form-field class = "together"appearance="fill" >
                 <mat-label>State</mat-label>
                 <mat-select formControlName="state"    [(ngModel)]="selectedState" (ngModelChange)="onStateChange()" >
-                  <mat-option *ngFor="let item of state" value={{item.id}} >{{ item.state_name }}</mat-option>
+                  <mat-option *ngFor="let item of state" value={{item.state_id}} >{{ item.state_name }}</mat-option>
 
                 </mat-select>
                 <mat-error *ngIf="form.get('state')?.hasError('required')">
