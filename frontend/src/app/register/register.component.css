@@ -2,11 +2,18 @@
   top: 50px;
   max-width: 600px;
   left: 600px;
-  right: 20px;
-  border: 1px solid black;
-  height: 77vh;
-  background-color: #e9e7e7;
+  right: 30px;
+  
+  height: 80vh;
+  background-color: #ffffff;
+
+  border: 1.5px solid rgb(167, 70, 6);
+    border-radius: 10px; overflow: hidden;;
+    background-color:#ffffff;
+
+
 }
+
 
 .register-form {
   min-width: 150px;
@@ -28,9 +35,10 @@
 }
 
 .submit-button {
-  left: 525px;
-  bottom: 0px;
-  right: 35px;
+  left: 450px;
+  bottom: 10px;
+  
+ 
 }
 
 .reduce{
