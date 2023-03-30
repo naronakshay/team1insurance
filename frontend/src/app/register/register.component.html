@@ -133,7 +133,7 @@
                 <mat-label>PIN Code</mat-label>
                 <input matInput formControlName="pincode" >
                 <mat-error *ngIf="form.get('pincode')?.hasError('required')"> Required.</mat-error>
-                <mat-error *ngIf="form.get('pincode')?.hasError('pattern')">Enter a valid PIN Code.</mat-error>
+                <mat-error *ngIf="form.get('pincode')?.hasError('pattern')||form.get('pincode')?.hasError('sameDigits')">Enter a valid PIN Code.</mat-error>
               </mat-form-field>
 
             

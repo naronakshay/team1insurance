@@ -13,7 +13,16 @@ interface City {
   city_name: string;
 }
 
-
+function sameDigitsValidator(control: FormControl) {
+  const value = control.value;
+  if (value && value.length > 0) {
+    const firstDigit = value.charAt(0);
+    const sameDigits = value.split('').every((digit: any) => digit === firstDigit);
+    return sameDigits ? { sameDigits: true } : null;
+  } else {
+    return null;
+  }
+}
 
 
 @Component({
@@ -54,14 +63,14 @@ export class RegisterComponent  implements OnInit  {
     firstName : new FormControl('',[ Validators.required]),
     lastName :new FormControl('',[ Validators.required]),
     email:new FormControl('', [Validators.required,Validators.email,]),
-    mobileNumber : new FormControl('', [Validators.required, Validators.pattern('[0-9]{10}')]),
+    mobileNumber : new FormControl('', [Validators.required, Validators.pattern('[0-9]{10}'),sameDigitsValidator]),
     dateOfBirth : new FormControl('', Validators.required),
     address : new FormControl('', Validators.required),
-    govId : new FormControl('', [Validators.required, Validators.pattern('[0-9]{12}')]),
+    govId : new FormControl('', [Validators.required, Validators.pattern('[0-9]{12}'),sameDigitsValidator]),
     gender : new FormControl('', Validators.required),
     city : new FormControl('', Validators.required),
     state : new FormControl('', Validators.required),
-    pincode : new FormControl('', [Validators.required, Validators.pattern('[0-9]{6}')]),
+    pincode : new FormControl('', [Validators.required, Validators.pattern('[0-9]{6}'),sameDigitsValidator]),
 
     });
 
