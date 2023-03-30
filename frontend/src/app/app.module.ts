@@ -39,7 +39,7 @@ import { BootstrapCardComponent } from './bootstrap-card/bootstrap-card.componen
     QuoteComponent,
     
     CarouselComponent,     
-    BootstrapCardComponent,
+    BootstrapCardComponent, 
    
   ],
   imports: [

@@ -1,50 +1,44 @@
 .register-card {
-    top: 50px;
-    max-width: 600px;
-    left: 600px;
-    right: 20px;
-    border: 1px solid black;
-    height: 77vh;
-    background-color: #e9e7e7;
-  }
+  top: 50px;
+  max-width: 600px;
+  left: 600px;
+  right: 20px;
+  border: 1px solid black;
+  height: 77vh;
+  background-color: #e9e7e7;
+}
 
-  .register-form {
-    min-width: 150px;
-    max-width: 500px;
-    width: 90%;
-  }
+.register-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 90%;
+}
 
-  .register-container mat-form-field + mat-form-field {
-    margin-left: 30px;
-    
-  }
+.register-container mat-form-field + mat-form-field {
+  margin-left: 30px;
+  
+}
 
-  .rigt-side{
-    width: 235px;
-  }
+.rigt-side{
+  width: 235px;
+}
 
-  .right-alone{
-    width: 170px;
-  }
-  
-  .submit-button {
-    left: 525px;
-    bottom: 0px;
-    right: 35px;
-  }
+.right-alone{
+  width: 170px;
+}
 
-  .reduce{
-    width: 235px;
-  }
+.submit-button {
+  left: 525px;
+  bottom: 0px;
+  right: 35px;
+}
+
+.reduce{
+  width: 235px;
+}
 
 
-  .together{
-    width:130px;
-    
-  }
+.together{
+  width:130px;
   
-  
-  
-  
-  
-  
+}
