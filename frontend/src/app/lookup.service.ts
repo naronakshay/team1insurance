@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 interface State{
-  id : number;
-  name: String;
+  state_id : number;
+  state_name: String;
 
 
 }

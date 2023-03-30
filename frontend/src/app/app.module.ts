@@ -22,6 +22,9 @@ import { Register2Component } from './register2/register2.component';
 import {MatRadioModule} from '@angular/material/radio';
 import { LookupService } from './lookup.service';
 import { HttpClientModule } from '@angular/common/http';
+import { QuoteComponent } from './quote/quote.component';
+import { CarouselComponent } from './carousel/carousel.component';
+import { BootstrapCardComponent } from './bootstrap-card/bootstrap-card.component';
 
 
 
@@ -33,6 +36,10 @@ import { HttpClientModule } from '@angular/common/http';
     RegisterComponent,
     PasswordComponent,
     Register2Component,
+    QuoteComponent,
+    
+    CarouselComponent,     
+    BootstrapCardComponent,
    
   ],
   imports: [

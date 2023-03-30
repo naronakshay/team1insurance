@@ -5,6 +5,7 @@
     right: 20px;
     border: 1px solid black;
     border-radius: 10px; overflow: hidden;;
+    background-color:#e9e7e7;
   }
 
 .register-form {
@@ -28,7 +29,8 @@ button{
 
   }
 
-
-
-
+  .card{
+    margin-top: 150px;
+    margin-left: 30px;
+}
 
