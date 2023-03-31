@@ -1,5 +1,5 @@
 .register-card {
-  top: 30px;
+  top: -500px;
   max-width: 600px;
   left: 600px;
   right: 30px;
@@ -13,15 +13,15 @@
 
 
 }
-
-body{
-  height: 150%;
+.register-page-styling{
+ 
+  margin-top:50px;
+  margin-left:80px;
+  height: 78vh;
+  width: 400px;
+  align-items: center;
+ 
 }
-
-
-    
-    
-
 .register-form {
   min-width: 150px;
   max-width: 500px;
@@ -56,4 +56,10 @@ body{
 .together{
   width:130px;
   
+}
+.register-page-image{
+  margin-left: 5px;
+  margin-right: 200px;
+  width: 500px;
+  height: 400px;
 }
