@@ -25,7 +25,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { QuoteComponent } from './quote/quote.component';
 import { CarouselComponent } from './carousel/carousel.component';
 import { BootstrapCardComponent } from './bootstrap-card/bootstrap-card.component';
-import { RegstyleComponent } from './regstyle/regstyle.component';
+
 
 
 
@@ -40,7 +40,7 @@ import { RegstyleComponent } from './regstyle/regstyle.component';
     QuoteComponent,
     
     CarouselComponent,     
-    BootstrapCardComponent, RegstyleComponent, 
+    BootstrapCardComponent
    
   ],
   imports: [
