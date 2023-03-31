@@ -1,10 +1,10 @@
 .register-card {
-  top: 50px;
+  top: -360px;
   max-width: 600px;
   left: 600px;
   right: 30px;
   
-  height: 80vh;
+  height: 78vh;
   background-color: #ffffff;
 
   border: 1.5px solid rgb(167, 70, 6);
@@ -14,6 +14,13 @@
 
 }
 
+body{
+  height: 150%;
+}
+
+
+    
+    
 
 .register-form {
   min-width: 150px;

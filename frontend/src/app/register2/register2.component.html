@@ -1,7 +1,10 @@
+<body>
 <app-navbar [showButton]="true"></app-navbar>
 
 
+
 <mat-card class="register-card">
+    <mat-card-content>
     <br>
     <mat-card-title style="text-align: center">Just few last details </mat-card-title>
     <mat-card-subtitle style="text-align: center">To help us find the right plan</mat-card-subtitle>
@@ -28,17 +31,19 @@
         </div>
         <br>
           
-        <div  class="border" style="background-color: white;">
+        <div  class="border" style="background-color: white; margin-bottom:  0px;">
             <mat-checkbox >Diabetes</mat-checkbox>
         </div>
 
         <button mat-raised-button color="primary" style="margin-left:12px" type="submit" (click)="moveTob()">Back</button>
-        <button mat-raised-button style="margin-left:440px" color="primary" type="submit" (click)="moveTof()" >Next</button>   
+        <button mat-raised-button style="margin-left:400px;" color="primary" type="submit" (click)="moveTof()" >Next</button>   
     </div>
+    </mat-card-content>
 
 
 
 </mat-card>
+</body>
 
 
 

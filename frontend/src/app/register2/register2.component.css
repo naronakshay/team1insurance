@@ -1,4 +1,6 @@
-
+body{
+  height: 110%;
+}
 mat-card-title{
     font-size:  22px;
     font-weight: 800;
@@ -8,12 +10,7 @@ mat-card-subtitle{
       font-size: 25px;
   }
 
- mat-card-content{
-        margin-left: -12px;
-        font-size: medium;
-        font-weight: bold;
-        text-align: center;
-    }
+ 
 
 h2{
         
@@ -36,9 +33,6 @@ button{
         flex-direction: row;
       }
       
-.tobacco-radio-button {
-        margin-right: 10px;
-      }
 
 .border{
 
@@ -56,10 +50,11 @@ button{
  
 
 .register-card {
-        top: 50px;
+        top: 40px;
         max-width: 600px;
         left: 600px;
         right: 20px;
+        height: 510px;
         
 
 

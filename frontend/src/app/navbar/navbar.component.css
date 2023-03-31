@@ -5,7 +5,7 @@
 .mat-toolbar {
     
     background-color: #fdfdfd;
-    color: #000000;
+    color: #182e92;
     box-shadow: 0 0 5px 1px black;
    
     font-weight: bold;
@@ -13,6 +13,16 @@
   
 }
 
+.logo-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo-container img {
+    height: 40px;
+    margin-right: 10px;
+  }
+  
 
     
 
