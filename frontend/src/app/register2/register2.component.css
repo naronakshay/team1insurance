@@ -50,17 +50,55 @@ button{
         margin-bottom: 5px;
       }
       
-
- 
-
-.register-card {
-        top: 50px;
-        max-width: 600px;
-        left: 600px;
-        right: 20px;
-        border: 1px solid black;
-        background-color: #e9e7e7;
+      .testimonial-card {
+        border: none;
+        background-color: #fff;
+        text-align: center;
+        box-shadow: 0 2px 4px rgba(0,0,0,.1);
+        transition: box-shadow .25s ease-out;
+        margin-left: 40px;
+        width: 500px;
+        height: 300px;
+      }
+      .testimonial-card:hover {
+        box-shadow: 0 8px 16px rgba(0,0,0,.2);
+      }
+      .testimonial-img {
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+        margin: 0 auto 20px;
+        display: block;
+      }
+      .card-title {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+      }
+      .card-text {
+        font-size: 16px;
+        line-height: 1.5;
+      }
+      .carousel-indicators button {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        margin: 0 5px;
+        text-indent: -999px;
+        border: 2px solid #fff;
+        border-radius: 10px;
+        cursor: pointer;
+        background-color: #6895cb;
       }
       
-      
-      
+      .carousel-indicators .active {
+        background-color: #295386;
+      } 
+
+.register-card {
+  top: -400px;
+  max-width: 600px;
+  left: 600px;
+  right: 20px;
+  border: 1px solid black;
+  background-color: #e9e7e7;
+}
