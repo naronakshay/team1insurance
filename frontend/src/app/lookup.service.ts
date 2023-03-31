@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 interface State{
   state_id : number;
-  state_name: String;
+  name: String;
 
 
 }
@@ -23,15 +23,13 @@ interface City {
 @Injectable({
   providedIn: 'root'
 })
-export class LookupService implements OnInit{
+export class LookupService  {
 
  
   private baseUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient) { }
-  ngOnInit(): void {
-    
-  }
+  
 
   getStates(): Observable<State[]> {
     return this.http.get<State[]>(`${this.baseUrl}/states`);

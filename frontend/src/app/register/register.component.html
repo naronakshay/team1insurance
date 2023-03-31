@@ -1,27 +1,29 @@
+<body>
 <app-navbar [showButton]="true"></app-navbar>
 <div class="register-page-styling">
   
-    <h2 style="font-size:25px;font-weight:bold;">Why buy from Insurance?</h2>
+    <h2 style="font-size:25px;font-weight:bold;">Why buy from Us?</h2>
     
   
   <ul class="style-content-list">
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
+    <li style="font-weight: 600;">30 minutes claim support*</li>
+    <li  style="font-weight: 600;">Tax benifits upto Rs 75,000 under Sec. 80D</li>
+    <li style="font-weight: 600;">Instant Purchase</li>
+    <li  style="font-weight: 600;">10,000+ Hospitals for cashless treatment</li>
   </ul>
 
   <img src='../../assets/insurance-animation-image.webp' class="register-page-image">
 </div>
 <mat-card class="register-card">
-  <br/>
-    <mat-card-title style="text-align: center;">Register Now</mat-card-title>
+  
+    <mat-card-title style="text-align: center;font-weight: bolder;">Register Now</mat-card-title>
     <br/>
+    <mat-card-content style="display: flex; justify-content: center; align-items: center;box-sizing: border-box;">
     <form [formGroup]="form"  class="register-form" (ngSubmit)="onSubmit()" >
 
 
-          <div class="register-container">
-            &nbsp;
+          <div class="register-container mat-card-white">
+            
             <mat-form-field  appearance="fill">
               <mat-label>First Name</mat-label>
               <input matInput formControlName="firstName">
@@ -36,7 +38,7 @@
           </div>
 
           <div class="register-container">
-            &nbsp;
+            
             <mat-form-field appearance="fill">
                 <mat-label>Email</mat-label>
                 <input matInput formControlName="email">
@@ -58,6 +60,9 @@
                 <mat-error *ngIf="form.get('mobileNumber')?.hasError('pattern')">
                     Enter a valid Mobile Number.
                 </mat-error>
+                <mat-error *ngIf="form.get('mobileNumber')?.hasError('sameDigits')">
+                  Enter a valid Mobile Number.
+              </mat-error>
 
             </mat-form-field>
 
@@ -67,7 +72,7 @@
           <div class="register-container">
            
 
-            &nbsp;
+            
 
             <mat-form-field appearance="fill" >
                 <mat-label>Gender</mat-label>
@@ -96,7 +101,6 @@
 
           
           <div class="register-container">
-            &nbsp;
 
             <mat-form-field  appearance="fill">
               <mat-label>Address</mat-label>
@@ -108,7 +112,7 @@
               <mat-label>Aadhar Number</mat-label>
               <input matInput placeholder="0000-0000-0000" formControlName="govId">
               <mat-error *ngIf="form.get('govId')?.hasError('required')"> Required.</mat-error>
-              <mat-error *ngIf="form.get('govId')?.hasError('pattern')">Enter a valid Aadhar Number</mat-error>
+              <mat-error *ngIf="form.get('govId')?.hasError('pattern')|| form.get('govId')?.hasError('sameDigits')">Enter a valid Aadhar Number</mat-error>
             </mat-form-field>
           </div>
 
@@ -117,7 +121,6 @@
           <div class="register-container">
            
 
-              &nbsp;
 
               <mat-form-field class = "together"appearance="fill" >
                 <mat-label>State</mat-label>
@@ -133,7 +136,7 @@
               <mat-form-field class = "together"appearance="fill" >
                 <mat-label>City</mat-label>
                 <mat-select formControlName="city" >
-                  <mat-option *ngFor="let item of cities" value={{item.city_id}}>{{item.city_name}}</mat-option>
+                  <mat-option *ngFor="let item of cities" >{{item.city_name}}</mat-option>
                 </mat-select>
                 <mat-error *ngIf="form.get('city')?.hasError('required')">
                      Required.
@@ -158,5 +161,8 @@
           </div>    
 
       </form>
+    </mat-card-content>
+
 </mat-card>
 
+</body>

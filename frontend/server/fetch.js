@@ -14,14 +14,14 @@ const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '',
-  database: 'state_city_information'
+  database: 'lookup'
 });
 
 connection.connect();
 
 
 app.get('/states', (req, res) => {
-  connection.query('SELECT * FROM state_info_table', (error, results, fields) => {
+  connection.query('SELECT * FROM state', (error, results, fields) => {
     if (error) {
       console.error(error);
       res.status(500).send('Error retrieving states');
@@ -32,9 +32,9 @@ app.get('/states', (req, res) => {
 });
 
 
-app.get('/cities/:{stateId}', (req, res) => {
+app.get('/cities/:stateId', (req, res) => {
   const stateId = req.params.stateId;
-  const query = 'SELECT * FROM city_info_table WHERE state_id = ?';
+  const query = 'SELECT * FROM city WHERE state_id = ?';
   connection.query(query, [stateId], (error, results) => {
     if (error) {
       throw error;

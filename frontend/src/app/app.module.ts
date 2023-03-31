@@ -28,6 +28,7 @@ import { BootstrapCardComponent } from './bootstrap-card/bootstrap-card.componen
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +40,7 @@ import { BootstrapCardComponent } from './bootstrap-card/bootstrap-card.componen
     QuoteComponent,
     
     CarouselComponent,     
-    BootstrapCardComponent,
+    BootstrapCardComponent
    
   ],
   imports: [
