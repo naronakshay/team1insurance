@@ -10,17 +10,17 @@
 
       
         <mat-card-content>
-          <form class="register-form" (ngSubmit)="onSubmit()">
+          <form [formGroup]="loginForm" class="register-form" (ngSubmit)="onSubmit()">
 
               <br>
               
               <mat-form-field class="align">
                     <mat-label>Email</mat-label>
-                    <input matInput [formControl]="emailFormControl"  appearance="fill">
-                    <mat-error *ngIf="emailFormControl.hasError('email')">
+                    <input matInput formControlName="emailFormControl"  appearance="fill">
+                    <mat-error *ngIf="loginForm.get('emailFormControl')?.hasError('email')">
                         Enter a valid Email Address.
                     </mat-error>
-                    <mat-error *ngIf="emailFormControl.hasError('required')">
+                    <mat-error *ngIf="loginForm.get('emailFormControl')?.hasError('required')">
                         Required.
                     </mat-error>
               </mat-form-field>
@@ -29,8 +29,8 @@
 
               <mat-form-field class="align">
                     <mat-label>Password</mat-label>
-                    <input matInput type="password"   [formControl]="passwordControl"  appearance="fill" required>
-                    <mat-error *ngIf="passwordControl.hasError('required')">Required</mat-error>
+                    <input matInput type="password"   formControlName="passwordControl"  appearance="fill" required>
+                    <mat-error *ngIf="loginForm.get('passwordControl')?.hasError('required')">Required</mat-error>
               </mat-form-field>
 
               <br>
@@ -41,11 +41,13 @@
           
           </form>
           <br>
+          <p style="margin-left: 70px;" *ngIf="errorMessage">{{errorMessage}}</p>
+          <br>
           <br>
           <p style="text-align: center;">Don't have an account? <a href="/register">Click here to register</a></p>
 
         </mat-card-content>
       </mat-card>
-    </body>
+      </body>
  
       

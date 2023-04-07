@@ -5,6 +5,7 @@ import { DateAdapter } from '@angular/material/core';
 import { Router } from '@angular/router';
 import { LookupService } from '../lookup.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DataServiceService } from '../data-service.service';
 
 
 
@@ -37,7 +38,7 @@ export class RegisterComponent  implements OnInit  {
   maxDate = new Date();
   form!: FormGroup;
   isFormValid: boolean = false;
-  state!: any[];
+  states!: any[];
 
 
 
@@ -48,7 +49,7 @@ export class RegisterComponent  implements OnInit  {
   
 
 
-  constructor(private lookupService : LookupService,private router: Router,private dateAdapter: DateAdapter<Date>,private fb:FormBuilder) { 
+  constructor(private dataService: DataServiceService,private lookupService : LookupService,private router: Router,private dateAdapter: DateAdapter<Date>,private fb:FormBuilder) { 
 
 
 
@@ -80,7 +81,7 @@ export class RegisterComponent  implements OnInit  {
   
   ngOnInit(): void {
     this.lookupService.getStates().subscribe((data: any[]) => {
-      this.state = data;
+      this.states = data;
     });
     
   
@@ -93,6 +94,10 @@ export class RegisterComponent  implements OnInit  {
     this.lookupService.getCities(this.selectedState).subscribe((data) => {
       this.cities = data;
     });
+
+
+
+
   }
 
 
@@ -107,6 +112,23 @@ export class RegisterComponent  implements OnInit  {
 
   onSubmit(){
 
+    const formData = this.form.value;
+    const formData1 ={
+          email: formData.email,
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          govId: formData.govId,
+          phoneNumber: formData.mobileNumber,
+          gender: formData.gender,
+          dob: formData.dateOfBirth.toISOString().substring(0, 10),
+          city: formData.city,
+          pinCode: formData.pincode,
+          address: formData.address,
+
+    };
+   
+    this.dataService.setRegisterData(formData1);
+  
     if (this.form.valid){
       this.router.navigate(['register2']);
     }

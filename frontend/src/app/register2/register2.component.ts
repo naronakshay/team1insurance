@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { DataServiceService } from '../data-service.service';
 
 @Component({
   selector: 'app-register2',
@@ -8,13 +9,37 @@ import { Router } from '@angular/router';
 })
 export class Register2Component {
 
-  constructor(private router: Router) { }
+  selectedOption!:String;
+  hypertensive: boolean = false;
+  diabetic: boolean = false;
+  tobaccoUser:boolean=false;
+
+  
+
+
+  constructor(private dataService: DataServiceService,private router: Router) { }
 
   moveTof(){
+
+    if (this.selectedOption=="Yes")
+    {
+      this.tobaccoUser=true;
+    }
+    const formData = {
+      tobaccoUser: this.tobaccoUser,
+      hypertensive: this.hypertensive,
+      diabetic: this.diabetic,
+      // other form data here
+    };
+
+  
+    this.dataService.setRegisterData2(formData);
+
     this.router.navigate(['password']);
   }
 
   moveTob(){
+   
     this.router.navigate(['register']);
 
   }
