@@ -1,7 +1,10 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { Router } from '@angular/router';
+import { DataServiceService } from '../data-service.service';
+import { SendDataService } from '../send-data.service';
 
 
 @Component({
@@ -16,13 +19,17 @@ import { Router } from '@angular/router';
 export class PasswordComponent {
 
 
-  form!: FormGroup;
+  form!:FormGroup;
+  errorMessage: any;
+ 
 
-  constructor(private fb: FormBuilder,private formbulder:FormBuilder, private router : Router) {
+  constructor(private sendDataService : SendDataService,private dataService: DataServiceService,private fb: FormBuilder,private formbulder:FormBuilder, private router : Router) {
 
       this.form = this.fb.group({
         password: ['', [Validators.required, Validators.minLength(8)]],
-        confirmPassword: ['', Validators.required]
+        confirmPassword: ['', Validators.required],
+    agreeToTerms:['']
+
       },{
     
      validator: this.passwordMatchValidator
@@ -45,9 +52,42 @@ export class PasswordComponent {
 
     onSubmit(){
 
+
+
       if(this.form.valid)
       {
-        this.router.navigate([''])
+        const passwordData = this.form.value;
+        
+      
+        const passwordData1 = {
+          
+          password: passwordData.password,
+          
+        };
+
+        this.dataService.setPasswordData(passwordData1);
+
+        const sharedData = this.dataService.getSharedData();
+        const mergedData = Object.assign({}, sharedData.PasswordData, sharedData.RegisterData, sharedData.RegisterData2);
+        console.log(mergedData);
+        this.sendDataService.register(mergedData).subscribe(
+          (data) => {
+            console.log('Registration successful', data);
+            
+          },
+          (error) => {
+            console.error('Registration error', error);
+            this.errorMessage = error;
+          }
+        
+        );
+
+        if(this.errorMessage=""){
+          this.router.navigate([''])
+
+        }
+        
+        
       }
 
     }

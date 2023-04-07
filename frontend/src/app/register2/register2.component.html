@@ -59,6 +59,7 @@
 
 
 <!-- Registration form -->
+
 <mat-card class="register-card">
     <mat-card-content>
     <br>
@@ -67,10 +68,11 @@
     <br>
     
     <div>
-              <mat-radio-group class="tobacco-radio-group">
+              <mat-radio-group [(ngModel)]="selectedOption" class="tobacco-radio-group">
                 <h2 class="tobacco-radio-button">&nbsp;&nbsp;&nbsp;Nicotin/Tobacco</h2>
-                <mat-radio-button class="tobacco-radio-button" value="yes">Yes</mat-radio-button>
-                <mat-radio-button class="tobacco-radio-button" value="no" checked>No</mat-radio-button>
+                <mat-radio-button class="tobacco-radio-button" value="Yes" >Yes</mat-radio-button>
+                <mat-radio-button class="tobacco-radio-button" value="No" >No</mat-radio-button>
+               
               </mat-radio-group>
     </div>   
     <br>
@@ -83,23 +85,29 @@
         </div>
 
         <div class="border" style="background-color: white;">
-            <mat-checkbox >Hypertension</mat-checkbox>
+            <mat-checkbox [(ngModel)]="hypertensive" >Hypertension</mat-checkbox>
         </div>
         <br>
           
         <div  class="border" style="background-color: white; margin-bottom:  0px;">
-            <mat-checkbox >Diabetes</mat-checkbox>
+            <mat-checkbox [(ngModel)]="diabetic" >Diabetes</mat-checkbox>
         </div>
 
-        <button mat-raised-button color="primary" style="margin-left:12px" type="submit" (click)="moveTob()">Back</button>
-        <button mat-raised-button style="margin-left:400px;" color="primary" type="submit" (click)="moveTof()" >Next</button>   
+        <button mat-raised-button color="primary" style="margin-left:12px"  (click)="moveTob()">Back</button>
+        <button mat-raised-button style="margin-left:400px;" color="primary" (click)="moveTof()" >Next</button>   
     </div>
     </mat-card-content>
 
 
 
 </mat-card>
+
+
+
 </body>
+
+
+
 
 
 

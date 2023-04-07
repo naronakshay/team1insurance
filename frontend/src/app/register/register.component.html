@@ -77,9 +77,9 @@
             <mat-form-field appearance="fill" >
                 <mat-label>Gender</mat-label>
                 <mat-select formControlName="gender" >
-                  <mat-option value="primary">Male</mat-option>
-                  <mat-option value="accent">Female</mat-option>
-                  <mat-option value="warn">Others</mat-option>
+                  <mat-option value="M">Male</mat-option>
+                  <mat-option value="F">Female</mat-option>
+                  <mat-option value="O">Others</mat-option>
                 </mat-select>
                 <mat-error *ngIf="form.get('gender')?.hasError('required')">
                     Required.
@@ -125,7 +125,7 @@
               <mat-form-field class = "together"appearance="fill" >
                 <mat-label>State</mat-label>
                 <mat-select formControlName="state"    [(ngModel)]="selectedState" (ngModelChange)="onStateChange()" >
-                  <mat-option *ngFor="let item of state" value={{item.state_id}} >{{ item.state_name }}</mat-option>
+                  <mat-option *ngFor="let item of states" value={{item.state_id}} >{{ item.state_name }}</mat-option>
 
                 </mat-select>
                 <mat-error *ngIf="form.get('state')?.hasError('required')">
@@ -136,7 +136,7 @@
               <mat-form-field class = "together"appearance="fill" >
                 <mat-label>City</mat-label>
                 <mat-select formControlName="city" >
-                  <mat-option *ngFor="let item of cities" >{{item.city_name}}</mat-option>
+                  <mat-option *ngFor="let item of cities" value={{item.city_name}} >{{item.city_name}}</mat-option>
                 </mat-select>
                 <mat-error *ngIf="form.get('city')?.hasError('required')">
                      Required.
