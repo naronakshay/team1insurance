@@ -31,6 +31,17 @@ app.get('/states', (req, res) => {
   });
 });
 
+app.get('/disease', (req, res) => {
+  connection.query('SELECT * FROM disease', (error, results, fields) => {
+    if (error) {
+      console.error(error);
+      res.status(500).send('Error retrieving disease');
+    } else {
+      res.json(results);
+    }
+  });
+});
+
 
 app.get('/cities/:stateId', (req, res) => {
   const stateId = req.params.stateId;

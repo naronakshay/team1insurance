@@ -3,6 +3,7 @@ package insurance.premium.backend.Service;
 import insurance.premium.backend.Entity.Member;
 import insurance.premium.backend.Repo.MemberRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,12 +22,20 @@ public class MemberServiceImpl implements MemberService {
     }
 
     public Member login(String email, String password) {
+        BCryptPasswordEncoder bCryptPassword = new BCryptPasswordEncoder();
+
         Member member = memberRepo.findByEmail(email);
 
-        if (member != null && member.getPassword().equals(password)) {
-            return member;
+        Member m = null;
+        if (member != null){
+            if(bCryptPassword.matches(member.getPassword(),password))
+            {
+                m=member;
+            }
         } else {
             throw new AuthenticationException("Invalid login credentials.", null);
+            
         }
+        return m;
     }
 }
