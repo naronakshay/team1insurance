@@ -16,6 +16,12 @@ interface City {
   city_name: string;
 }
 
+interface Disease{
+  disease_id:number;
+  disease_name:string;
+
+}
+
 
 
 
@@ -40,6 +46,12 @@ export class LookupService  {
     const url = `${this.baseUrl}/cities/${stateId}`;
     return this.http.get<City[]>(url);
   }
+
+  getDisease(): Observable<Disease[]> {
+    return this.http.get<Disease[]>(`${this.baseUrl}/disease`);
+  }
+
+  
  
 
  

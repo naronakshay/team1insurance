@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "my_table")
+@Table(name = "member_table")
 public class Member {
 
     @Id
@@ -35,6 +35,10 @@ public class Member {
     @Column(name = "dob")
     private Date dob;
 
+    @Column(name="state")
+    private String state;
+
+
     @Column(name = "is_tobacco_user")
     private Boolean isTobaccoUser= false;;
 
@@ -47,11 +51,29 @@ public class Member {
     @Column(name = "address")
     private String address;
 
-    @Column(name = "is_diabetic")
-    private Boolean isDiabetic=false;
+    @Column(name = "illness_Details")
+    private String illnessDetails;
 
-    @Column(name = "is_hypertensive")
-    private Boolean isHypertensive=false;
+    public Member() {
+    }
+
+    public Member(int memberId, String email, String firstName, String lastName, String govId, String phoneNumber, String gender, Date dob, String state, Boolean isTobaccoUser, String city, String pinCode, String address, String illnessDetails, String password) {
+        this.memberId = memberId;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.govId = govId;
+        this.phoneNumber = phoneNumber;
+        this.gender = gender;
+        this.dob = dob;
+        this.state = state;
+        this.isTobaccoUser = isTobaccoUser;
+        this.city = city;
+        this.pinCode = pinCode;
+        this.address = address;
+        this.illnessDetails = illnessDetails;
+        this.password = password;
+    }
 
     @Column(name = "password")
     private String password;
@@ -120,6 +142,14 @@ public class Member {
         this.dob = dob;
     }
 
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
     public Boolean getTobaccoUser() {
         return isTobaccoUser;
     }
@@ -152,20 +182,12 @@ public class Member {
         this.address = address;
     }
 
-    public Boolean getDiabetic() {
-        return isDiabetic;
+    public String getIllnessDetails() {
+        return illnessDetails;
     }
 
-    public void setDiabetic(Boolean diabetic) {
-        isDiabetic = diabetic;
-    }
-
-    public Boolean getHypertensive() {
-        return isHypertensive;
-    }
-
-    public void setHypertensive(Boolean hypertensive) {
-        isHypertensive = hypertensive;
+    public void setIllnessDetails(String illnessDetails) {
+        this.illnessDetails = illnessDetails;
     }
 
     public String getPassword() {
@@ -174,26 +196,5 @@ public class Member {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Member(int memberId, String email, String firstName, String lastName, String govId, String phoneNumber, String gender, Date dob, Boolean isTobaccoUser, String city, String pinCode, String address, Boolean isDiabetic, Boolean isHypertensive, String password) {
-        this.memberId = memberId;
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.govId = govId;
-        this.phoneNumber = phoneNumber;
-        this.gender = gender;
-        this.dob = dob;
-        this.isTobaccoUser = isTobaccoUser;
-        this.city = city;
-        this.pinCode = pinCode;
-        this.address = address;
-        this.isDiabetic = isDiabetic;
-        this.isHypertensive = isHypertensive;
-        this.password = password;
-    }
-
-    public Member() {
     }
 }

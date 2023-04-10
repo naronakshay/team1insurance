@@ -70,8 +70,8 @@
     <div>
               <mat-radio-group [(ngModel)]="selectedOption" class="tobacco-radio-group">
                 <h2 class="tobacco-radio-button">&nbsp;&nbsp;&nbsp;Nicotin/Tobacco</h2>
-                <mat-radio-button class="tobacco-radio-button" value="Yes" >Yes</mat-radio-button>
-                <mat-radio-button class="tobacco-radio-button" value="No" >No</mat-radio-button>
+                <mat-radio-button class="tobacco-radio-button" value="true">Yes</mat-radio-button>
+                <mat-radio-button class="tobacco-radio-button" value="false" >No</mat-radio-button>
                
               </mat-radio-group>
     </div>   
@@ -84,14 +84,14 @@
           <br>
         </div>
 
+        <ng-container *ngFor="let item of disease">
         <div class="border" style="background-color: white;">
-            <mat-checkbox [(ngModel)]="hypertensive" >Hypertension</mat-checkbox>
+            <mat-checkbox  [(ngModel)]="item.selected" (change)="onDiseaseSelectionChange()" >{{item.disease_name}}</mat-checkbox>
         </div>
+      </ng-container>
         <br>
           
-        <div  class="border" style="background-color: white; margin-bottom:  0px;">
-            <mat-checkbox [(ngModel)]="diabetic" >Diabetes</mat-checkbox>
-        </div>
+        
 
         <button mat-raised-button color="primary" style="margin-left:12px"  (click)="moveTob()">Back</button>
         <button mat-raised-button style="margin-left:400px;" color="primary" (click)="moveTof()" >Next</button>   
@@ -101,6 +101,7 @@
 
 
 </mat-card>
+
 
 
 

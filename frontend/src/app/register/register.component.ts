@@ -15,6 +15,14 @@ interface City {
   city_name: string;
 }
 
+
+interface State{
+  state_id : number;
+  name: String;
+
+
+}
+
 function sameDigitsValidator(control: FormControl) {
   const value = control.value;
   if (value && value.length > 0) {
@@ -42,7 +50,8 @@ export class RegisterComponent  implements OnInit  {
 
 
 
-  selectedState!: number;
+  
+  selectedState!: State;
   cities!: City[];
  
   
@@ -79,22 +88,39 @@ export class RegisterComponent  implements OnInit  {
   }
 
   
+
+
   ngOnInit(): void {
     this.lookupService.getStates().subscribe((data: any[]) => {
       this.states = data;
+
+      
     });
     
-  
+
+
   }
+    
+   
+  
+
+
   
 
   
   onStateChange() {
-    
-    this.lookupService.getCities(this.selectedState).subscribe((data) => {
+
+    const id =this.selectedState.state_id
+      this.lookupService.getCities(id).subscribe((data) => {
       this.cities = data;
+      
     });
 
+    
+   
+
+    
+   
 
 
 
@@ -105,12 +131,11 @@ export class RegisterComponent  implements OnInit  {
 
  
  
- 
-
- 
-
-
   onSubmit(){
+
+    
+
+
 
     const formData = this.form.value;
     const formData1 ={
@@ -122,10 +147,12 @@ export class RegisterComponent  implements OnInit  {
           gender: formData.gender,
           dob: formData.dateOfBirth.toISOString().substring(0, 10),
           city: formData.city,
+          state:formData.state.state_name,
           pinCode: formData.pincode,
           address: formData.address,
 
     };
+   
    
     this.dataService.setRegisterData(formData1);
   
