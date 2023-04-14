@@ -2,10 +2,11 @@ package insurance.premium.backend.Entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
-@Table(name = "my_table")
+@Table(name = "user_registration_details")
 public class Member {
 
     @Id
@@ -33,7 +34,7 @@ public class Member {
     private String gender;
 
     @Column(name = "dob")
-    private Date dob;
+    private LocalDate dob;
 
     @Column(name = "is_tobacco_user")
     private Boolean isTobaccoUser= false;;
@@ -112,11 +113,11 @@ public class Member {
         this.gender = gender;
     }
 
-    public Date getDob() {
+    public LocalDate getDob() {
         return dob;
     }
 
-    public void setDob(Date dob) {
+    public void setDob(LocalDate dob) {
         this.dob = dob;
     }
 
@@ -176,7 +177,7 @@ public class Member {
         this.password = password;
     }
 
-    public Member(int memberId, String email, String firstName, String lastName, String govId, String phoneNumber, String gender, Date dob, Boolean isTobaccoUser, String city, String pinCode, String address, Boolean isDiabetic, Boolean isHypertensive, String password) {
+    public Member(int memberId, String email, String firstName, String lastName, String govId, String phoneNumber, String gender, LocalDate dob, Boolean isTobaccoUser, String city, String pinCode, String address, Boolean isDiabetic, Boolean isHypertensive, String password) {
         this.memberId = memberId;
         this.email = email;
         this.firstName = firstName;
