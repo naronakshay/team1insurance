@@ -5,7 +5,6 @@ import insurance.premium.backend.Entity.Member;
 import insurance.premium.backend.Entity.Policy;
 import insurance.premium.backend.Repo.MemberRepo;
 import insurance.premium.backend.Service.MemberService;
-import insurance.premium.backend.Service.MemberServiceImpl;
 import insurance.premium.backend.Service.PolicyService;
 import insurance.premium.backend.security.JwtUtil;
 import org.kie.api.runtime.KieSession;
@@ -56,7 +55,7 @@ public class MemberController {
 
     @GetMapping("/user/{email}")
     public Member getUserByEmail(@PathVariable String email) {
-        // logic to retrieve user details by email
+
         Member member = memberRepo.findByEmail(email);
         return member;
     }
@@ -123,11 +122,16 @@ public class MemberController {
 
 
 
-    @PostMapping("/order")
-    public Policy orderNow(@RequestBody Policy policy) {
-        session.insert(policy);
-        session.fireAllRules();
+    @GetMapping("/premium/{email}")
+    public Policy orderNow(@PathVariable String email) {
+        Member member = memberRepo.findByEmail(email);
+
+
+
+        Policy policy=policyService.calculatePremium(member);
         return policy;
+
+
     }
 
 }

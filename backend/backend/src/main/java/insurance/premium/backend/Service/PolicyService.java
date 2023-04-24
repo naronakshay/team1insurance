@@ -7,49 +7,79 @@ import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.Period;
+import java.sql.*;
 import java.util.Calendar;
 import java.util.Date;
 
 @Service
 public class PolicyService {
 
-    private KieSession kieSession;
+    @Autowired
+    private KieSession session;
 
     @Autowired
     private MemberRepo memberRepo;
 
 
-    public void calculatePremium(String email) {
-        Member member = memberRepo.findByEmail(email);
-        Policy policy = new Policy();
-        if (member != null) {
-            policy.setGender(member.getGender());
-            policy.setIstobaccoUser(member.getTobaccoUser());
-
-            Date dob = member.getDob();
-
-            if (dob != null) {
-                Calendar cal = Calendar.getInstance();
-                cal.setTime(dob);
-                LocalDate dob1 = LocalDate.of(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH));
-                LocalDate now = LocalDate.now();
-                int age = Period.between(dob1, now).getYears();
-                policy.setAge(age);
-            }
-            // Set other member details as needed
+    public static int calculateAge(Date dateOfBirth) {
+        Calendar dob = Calendar.getInstance();
+        dob.setTime(dateOfBirth);
+        Calendar today = Calendar.getInstance();
+        int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
+        if (today.get(Calendar.MONTH) < dob.get(Calendar.MONTH)) {
+            age--;
+        } else if (today.get(Calendar.MONTH) == dob.get(Calendar.MONTH) && today.get(Calendar.DAY_OF_MONTH) < dob.get(Calendar.DAY_OF_MONTH)) {
+            age--;
         }
-
-        kieSession.insert(policy);
-        kieSession.fireAllRules();
-
-
-        double premium = 0.0;
-        if (policy.getPremium() != 0) {
-            premium = policy.getPremium();
-        }
-        policy.setPremium(premium);
+        return age;
     }
 
+
+    public static boolean isTier1City(String city_name) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        boolean isTier1City = false;
+        try {
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/lookup","root","");
+            stmt = conn.prepareStatement("SELECT tier1_city FROM city WHERE city_name = ?");
+            stmt.setString(1, city_name);
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                isTier1City = rs.getBoolean("tier1_city");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return isTier1City;
+    }
+
+
+
+
+
+    public Policy calculatePremium(Member member) {
+        Policy p=new Policy();
+        p.setIstobaccoUser(member.getTobaccoUser());
+        p.setGender(member.getGender());
+        p.setAge(calculateAge(member.getDob()));
+        p.setIstier1City(isTier1City(member.getCity()));
+
+
+
+        session.insert(p);
+        session.fireAllRules();
+
+
+        return p;
+
+    }
 }

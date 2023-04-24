@@ -5,7 +5,18 @@ public class Policy {
     Boolean istobaccoUser;
     int age;
 
+
     double premium =0.0;
+
+    Boolean istier1City;
+
+    public Boolean getIstier1City() {
+        return istier1City;
+    }
+
+    public void setIstier1City(Boolean istier1City) {
+        this.istier1City = istier1City;
+    }
 
     public double getPremium() {
         return premium;
