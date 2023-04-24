@@ -1,0 +1,101 @@
+.full-width-image {
+    width: 100%;
+    height: 30rem;filter: brightness(0.8);
+    
+  }
+
+  body {
+    height: 125vh;
+    background-image: none;
+    
+  }
+
+  .contact-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.125rem;
+    padding: 0.0625rem;
+    margin-top: 0.625rem;
+  
+  }
+  
+ 
+  .contact-info__item mat-icon {
+    font-size: 1.25rem;
+    margin-right: .3125rem;
+  }
+
+  .contact-info__item span {
+    font-size: 0.625rem;
+  }
+  
+  
+
+  .contact-info__item {
+    display: flex;
+    align-items: center;
+    color: white;
+   font-size:75%;
+  }
+  .contact-info__item:not(:last-child) {
+    margin-right: 5.625rem;
+  }
+  
+
+  .contact-info mat-icon {
+
+    color: white;
+  }
+  
+  
+  .blue-div {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3rem;
+    background-color: rgb(182, 87, 24);
+    z-index: 1;
+  }
+
+  .image-container {
+    position: relative;
+  }
+  
+  .text-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+  }
+
+  .text-overlay h1 {
+    font-size: 3rem;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    margin-bottom: 1rem;
+    margin-bottom: 1rem;
+    font-weight: bolder;
+  }
+  
+  .text-overlay p {
+    font-size: 1.5rem;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    font-weight: bolder;
+  }
+
+  .info{
+    margin-top: 0.625rem;
+    color: gray;
+    margin-bottom: 0rem;
+  }
+
+  .info1{
+    margin-left: 1.875rem;
+  }
+  
+
+  

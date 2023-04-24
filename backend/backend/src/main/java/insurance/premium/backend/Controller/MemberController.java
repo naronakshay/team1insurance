@@ -2,8 +2,13 @@ package insurance.premium.backend.Controller;
 
 import insurance.premium.backend.Entity.LoginRequest;
 import insurance.premium.backend.Entity.Member;
+import insurance.premium.backend.Entity.Policy;
+import insurance.premium.backend.Repo.MemberRepo;
 import insurance.premium.backend.Service.MemberService;
 import insurance.premium.backend.Service.MemberServiceImpl;
+import insurance.premium.backend.Service.PolicyService;
+import insurance.premium.backend.security.JwtUtil;
+import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -17,16 +22,22 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
 
     @Autowired
+    private JwtUtil jwtUtil;
+
+    @Autowired
+    private KieSession session;
+    @Autowired
     private MemberService memberService;
+
+    @Autowired
+    private MemberRepo memberRepo;
+
+    @Autowired
+    private PolicyService policyService;
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody Member member) {
         try {
-
-            BCryptPasswordEncoder bCryptPassword = new BCryptPasswordEncoder();
-            String encrypPassword = bCryptPassword.encode(member.getPassword());
-            member.setPassword(encrypPassword);
-
             Member registeredMember = memberService.registerMember(member);
             return new ResponseEntity<>(registeredMember, HttpStatus.CREATED);
         } catch (DataIntegrityViolationException ex) {
@@ -40,32 +51,83 @@ public class MemberController {
             }
         }
 
-
-
-
-
-
     }
+
+
+    @GetMapping("/user/{email}")
+    public Member getUserByEmail(@PathVariable String email) {
+        // logic to retrieve user details by email
+        Member member = memberRepo.findByEmail(email);
+        return member;
+    }
+
+
+
+
+
+
+
+
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+        String email = loginRequest.getEmail();
+        String password = loginRequest.getPassword();
 
 
-        try {
+        if (isValidUser(email, password)) {
 
+            String token = JwtUtil.generateToken(email);
+            return ResponseEntity.ok(token);
 
-
-
-            Member member = memberService.login(loginRequest.getEmail(), loginRequest.getPassword());
-            return ResponseEntity.ok(member);
-        } catch (MemberServiceImpl.AuthenticationException e) {
-            return ResponseEntity.badRequest().body("Invalid email or password.");
+        } else {
+            if (!isValidEmail(email)) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid email");
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid password");
+            }
         }
+    }
+
+    private boolean isValidEmail(String email) {
+
+
+        Member member = memberRepo.findByEmail(email);
+        if (member != null) {
+            return true;
+        }
+
+        return false;
+}
+
+
+    private boolean isValidUser(String email, String password) {
+        boolean isEmailValid = false;
+        boolean isPasswordValid = false;
+        BCryptPasswordEncoder bcrypt=new BCryptPasswordEncoder();
+        Member member = memberRepo.findByEmail(email);
+        if(member != null)
+        {
+            if(bcrypt.matches(password,member.getPassword()))
+            {
+                isEmailValid = true;
+                isPasswordValid = true;
+            } else {
+                isEmailValid = true;
+            }
+        }
+        return (isEmailValid && isPasswordValid);
     }
 
 
 
 
 
+    @PostMapping("/order")
+    public Policy orderNow(@RequestBody Policy policy) {
+        session.insert(policy);
+        session.fireAllRules();
+        return policy;
+    }
 
 }

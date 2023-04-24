@@ -7,6 +7,25 @@ export class DataServiceService {
 
   constructor() { }
 
+
+  private email!:string;
+  setEmail(email:string){
+    this.email=email;
+  }
+
+  getEmail(){
+    return this.email;
+  }
+
+
+
+
+ 
+
+
+
+
+
   sharedData = {
     RegisterData: {},
     RegisterData2: {},

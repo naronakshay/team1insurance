@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { DataServiceService } from '../data-service.service';
+import jwtDecode from 'jwt-decode';
+
 
 import { SendDataService } from '../send-data.service';
 
@@ -10,9 +13,11 @@ import { SendDataService } from '../send-data.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+
   loginForm!: FormGroup;
   loginError: boolean = false;
   errorMessage: any;
+  
 
   constructor(private authService :SendDataService ,private formBuilder: FormBuilder,private router:Router){
 
@@ -29,25 +34,46 @@ export class LoginComponent {
   
   onSubmit() {
 
-    console.log(this.loginForm.value.emailFormControl, this.loginForm.value.passwordControl)
+    
 
     if(this.loginForm.valid){
 
-      this.authService.login(this.loginForm.value.emailFormControl, this.loginForm.value.passwordControl)
-      .subscribe(
-        (user) => {
-          this.router.navigate(['/register']);
-    
+      this.authService.login(this.loginForm.value.emailFormControl,this.loginForm.value.passwordControl).subscribe(
+        token => {
+          localStorage.setItem('token', token);
+          const decodedToken = jwtDecode<any>(token);
+          const email = decodedToken.sub;
+          localStorage.setItem('email',email);
+         
           
+        
+          
+          this.router.navigate(['user'])
+        
+          console.log(token)
         },
         (error) => {
-          this.errorMessage = error;
-          console.log(this.errorMessage);
 
-        }
+
+          if (error.status === 400) {
+            this.errorMessage = 'Invalid email or password';
+          } else if (error.status === 500) {
+            this.errorMessage = 'Internal Server Error! Try again';
+          } if (error.status === 401) {
+            this.errorMessage = 'Invalid email or password';
+          }
+          else {
+            this.errorMessage = 'Invalid email or password';
+          }}
+      
+        
       );
-    
+
+
+      
+      
     }
+  
     
    
     

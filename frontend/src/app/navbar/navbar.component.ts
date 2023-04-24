@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 import { Router } from '@angular/router';
+import { SendDataService } from '../send-data.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,14 +9,25 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
-  constructor(private router: Router) { }
+  constructor(private router: Router,private logout: SendDataService) { }
 
   
   @Input()
   showButton: boolean = false;
+  @Input() showButton2: boolean = false;
+
+  @Input() disableLink!: boolean;
+
 
   moveTo(){
-    this.router.navigate(['']);
+    this.router.navigate(['login']);
    
   }
+
+  moveTo2(){
+    this.logout.logout;
+    this.router.navigate(['login']);
+  }
+
+
 }

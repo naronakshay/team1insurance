@@ -1,0 +1,8 @@
+package KieRule;
+import insurance.premium.backend.Entity.Policy;
+rule "Adjust premium based on gender"
+when
+    policy : Policy(gender == "male" || gender == "female")
+then
+    policy.setPremium(1000);
+end
