@@ -5,7 +5,7 @@ public class Policy {
     Boolean istobaccoUser;
     int age;
 
-    double premium;
+    double premium =0.0;
 
     public double getPremium() {
         return premium;
