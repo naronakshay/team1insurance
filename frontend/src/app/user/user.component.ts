@@ -18,7 +18,7 @@ export class UserComponent  implements OnInit  {
   member!:any;
   errorMessage: any;
   userDetails:any;
- 
+
 
   constructor(private shareddata: DataServiceService,private userService:SendDataService) {
 
@@ -29,12 +29,13 @@ export class UserComponent  implements OnInit  {
     const details = localStorage.getItem('details'); 
     if (details && JSON.parse(details).email === email) { 
       this.userDetails = JSON.parse(details);
-      this.name = this.userDetails.firstName;
+      this.name = this.userDetails.firstName.toUpperCase();
     } else {
       this.userService.getMemberByEmail(email).subscribe(
         (data) => {
           this.userDetails = data;
-          this.name = this.userDetails.firstName;
+          localStorage.setItem('name',this.userDetails.firstName.toUpperCase());
+          this.name = localStorage.getItem('name');
           localStorage.setItem('details', JSON.stringify(data));
         },
         (error) => {
