@@ -1,8 +1,54 @@
 package KieRule;
 import insurance.premium.backend.Entity.Policy;
-rule "Adjust premium based on gender"
+
+rule "Set base premium"
 when
-    policy : Policy(gender == "male" || gender == "female")
+
+    policy : Policy(premium == null || premium == 0.0)
 then
-    policy.setPremium(1000);
+    policy.setPremium(3000.0);
 end
+
+
+
+rule "Add gender-based premium"
+when
+    policy : Policy(gender != null)
+then
+
+    if (policy.getGender().equalsIgnoreCase("m")) {
+        policy.setPremium(policy.getPremium() + 1000);
+    } else if (policy.getGender().equalsIgnoreCase("f")) {
+        policy.setPremium(policy.getPremium() + 500);
+    }
+end
+
+
+rule "Add tobacco user premium"
+when
+    policy : Policy(istobaccoUser == true)
+then
+    policy.setPremium(policy.getPremium() + 1000);
+end
+
+
+rule "Increase premium for tier 1 city residents"
+when
+    policy : Policy(istier1City == true)
+then
+    policy.setPremium(policy.getPremium() + 1000);
+end
+
+rule "Add age-based premium"
+when
+    policy : Policy(age != null)
+then
+    int age = policy.getAge();
+    double ageFactor = Math.ceil(age / 5.0); 
+    double ageBasedPremium = ageFactor * (policy.getPremium() * 0.05);
+    policy.setPremium(policy.getPremium() + ageBasedPremium);
+end
+
+
+
+
