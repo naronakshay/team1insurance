@@ -9,6 +9,7 @@ import { DataServiceService } from '../data-service.service';
 
 
 
+
 interface City {
   state_id:number;
   city_id: number;
@@ -90,9 +91,12 @@ export class RegisterComponent  implements OnInit  {
   
 
 
+
   ngOnInit(): void {
+    
     this.lookupService.getStates().subscribe((data: any[]) => {
       this.states = data;
+
 
       
     });
@@ -152,12 +156,15 @@ export class RegisterComponent  implements OnInit  {
           address: formData.address,
 
     };
+
+    
    
    
     this.dataService.setRegisterData(formData1);
   
     if (this.form.valid){
       this.router.navigate(['register2']);
+      
     }
     
 

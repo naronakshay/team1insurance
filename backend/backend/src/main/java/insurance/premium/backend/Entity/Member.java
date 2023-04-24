@@ -2,6 +2,7 @@ package insurance.premium.backend.Entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -134,9 +135,6 @@ public class Member {
         this.gender = gender;
     }
 
-    public Date getDob() {
-        return dob;
-    }
 
     public void setDob(Date dob) {
         this.dob = dob;
@@ -192,6 +190,10 @@ public class Member {
 
     public String getPassword() {
         return password;
+    }
+
+    public Date getDob() {
+        return dob;
     }
 
     public void setPassword(String password) {

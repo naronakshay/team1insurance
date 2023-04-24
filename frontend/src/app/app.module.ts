@@ -25,6 +25,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { QuoteComponent } from './quote/quote.component';
 import { CarouselComponent } from './carousel/carousel.component';
 import { BootstrapCardComponent } from './bootstrap-card/bootstrap-card.component';
+import { LandingComponent } from './landing/landing.component';
+import { MatIconModule } from '@angular/material/icon';
+import { UserComponent } from './user/user.component';
+import { MatStepperModule } from '@angular/material/stepper';
+
 
 
 
@@ -41,7 +46,7 @@ import { BootstrapCardComponent } from './bootstrap-card/bootstrap-card.componen
     QuoteComponent,
     
     CarouselComponent,     
-    BootstrapCardComponent
+    BootstrapCardComponent, LandingComponent, UserComponent
    
   ],
   imports: [
@@ -61,6 +66,8 @@ import { BootstrapCardComponent } from './bootstrap-card/bootstrap-card.componen
     MatCheckboxModule,
     MatRadioModule,
     HttpClientModule,
+    MatIconModule,
+    MatStepperModule
   ],
   providers: [LookupService],
   bootstrap: [AppComponent]

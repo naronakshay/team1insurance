@@ -21,6 +21,8 @@ export class PasswordComponent {
 
   form!:FormGroup;
   errorMessage: any;
+  message:any;
+  message2:any;
  
 
   constructor(private sendDataService : SendDataService,private dataService: DataServiceService,private fb: FormBuilder,private formbulder:FormBuilder, private router : Router) {
@@ -72,6 +74,9 @@ export class PasswordComponent {
         console.log(mergedData);
         this.sendDataService.register(mergedData).subscribe(
           (data) => {
+
+            this.message="Registration successful";
+            this.message2="Click Here to Login";
             console.log('Registration successful', data);
             
           },
