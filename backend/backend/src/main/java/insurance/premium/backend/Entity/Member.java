@@ -52,10 +52,19 @@ public class Member {
     @Column(name = "address")
     private String address;
 
-    @Column(name = "illness_Details")
+    @Column(name = "illness_details")
     private String illnessDetails;
 
     public Member() {
+    }
+
+
+    public String getIllnessDetails() {
+        return illnessDetails;
+    }
+
+    public void setIllnessDetails(String illnessDetails) {
+        this.illnessDetails = illnessDetails;
     }
 
     public Member(int memberId, String email, String firstName, String lastName, String govId, String phoneNumber, String gender, Date dob, String state, Boolean isTobaccoUser, String city, String pinCode, String address, String illnessDetails, String password) {
@@ -180,13 +189,6 @@ public class Member {
         this.address = address;
     }
 
-    public String getIllnessDetails() {
-        return illnessDetails;
-    }
-
-    public void setIllnessDetails(String illnessDetails) {
-        this.illnessDetails = illnessDetails;
-    }
 
     public String getPassword() {
         return password;

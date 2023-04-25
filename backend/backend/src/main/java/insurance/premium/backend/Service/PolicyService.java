@@ -21,6 +21,7 @@ public class PolicyService {
     private MemberRepo memberRepo;
 
 
+
     public static int calculateAge(Date dateOfBirth) {
         Calendar dob = Calendar.getInstance();
         dob.setTime(dateOfBirth);
@@ -61,8 +62,25 @@ public class PolicyService {
         }
         return isTier1City;
     }
+    public static Boolean[] illnessCheckArray(String illnessDetails) {
+        Boolean isDiabetic = false;
+        Boolean isHypertensive = false;
+
+        String[] illnessArray = illnessDetails.split(",");
+
+        for (String illness : illnessArray) {
+            if (illness.equalsIgnoreCase("Diabetes")) {
+                isDiabetic = true;
+            }
+            if (illness.equalsIgnoreCase("Hypertension")) {
+                isHypertensive = true;
+
+            }
+        }
+            return new Boolean[]{isDiabetic,isHypertensive};
 
 
+    }
 
 
 
@@ -72,7 +90,8 @@ public class PolicyService {
         p.setGender(member.getGender());
         p.setAge(calculateAge(member.getDob()));
         p.setIstier1City(isTier1City(member.getCity()));
-
+        p.setDiabetic(illnessCheckArray(member.getIllnessDetails())[0]);
+        p.setHypertensive(illnessCheckArray(member.getIllnessDetails())[1]);
 
 
         session.insert(p);

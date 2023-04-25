@@ -10,6 +10,25 @@ public class Policy {
 
     Boolean istier1City;
 
+   Boolean isDiabetic;
+   Boolean isHypertensive;
+
+    public Boolean getDiabetic() {
+        return isDiabetic;
+    }
+
+    public void setDiabetic(Boolean diabetic) {
+        this.isDiabetic = diabetic;
+    }
+
+    public Boolean getHypertensive() {
+        return isHypertensive;
+    }
+
+    public void setHypertensive(Boolean hypertensive) {
+        this.isHypertensive = hypertensive;
+    }
+
     public Boolean getIstier1City() {
         return istier1City;
     }
