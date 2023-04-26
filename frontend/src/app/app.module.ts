@@ -29,6 +29,7 @@ import { LandingComponent } from './landing/landing.component';
 import { MatIconModule } from '@angular/material/icon';
 import { UserComponent } from './user/user.component';
 import { MatStepperModule } from '@angular/material/stepper';
+import { PremiumDisplayComponent } from './premium-display/premium-display.component';
 
 
 
@@ -46,7 +47,7 @@ import { MatStepperModule } from '@angular/material/stepper';
     QuoteComponent,
     
     CarouselComponent,     
-    BootstrapCardComponent, LandingComponent, UserComponent
+    BootstrapCardComponent, LandingComponent, UserComponent, PremiumDisplayComponent
    
   ],
   imports: [
