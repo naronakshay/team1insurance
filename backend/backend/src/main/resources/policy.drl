@@ -55,12 +55,14 @@ end
 
 rule "Update Premium with Illness Premium"
 when
+
     policy: Policy(illnesspremium != null)
 then
 
 
     policy.setPremium(policy.getPremium() + policy.getIllnesspremium());
 end
+
 
 
 

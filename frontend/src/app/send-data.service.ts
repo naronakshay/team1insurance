@@ -10,7 +10,7 @@ export class SendDataService {
   private apiUrl = 'http://localhost:8080/api/v1/member/register'; 
   private loginUrl = 'http://localhost:8080/api/v1/member/login'; 
   private baseUrl = 'http://localhost:8080/api/v1/member/user';
-
+  private premiumUrl = 'http://localhost:8080/api/v1/member/premium';
 
   private currentUserSubject!: BehaviorSubject<any>;
   public currentUser!: Observable<any>;
@@ -55,6 +55,9 @@ export class SendDataService {
 
   getMemberByEmail(email: string | null): Observable<any> {
     return this.http.get(`${this.baseUrl}/${email}`);
+  }
+  getPremiumByEmail(email:string | null):Observable<any>{
+    return this.http.get(`${this.premiumUrl}/${email}`);
   }
 
  

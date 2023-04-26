@@ -18,6 +18,7 @@ const routes: Routes = [
   { path: 'password', component: PasswordComponent },
   { path: 'register2', component: Register2Component} ,
   {path:'user',component:UserComponent},
+  
  
 ];
 

@@ -10,6 +10,7 @@ public class Policy {
 
     Boolean istier1City;
 
+
     double illnesspremium;
 
     public double getIllnesspremium() {

@@ -43,8 +43,12 @@ public class PolicyService {
         ResultSet rs = null;
         boolean isTier1City = false;
         try {
+
             // Establish a connection to the MySQL database
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/lookup","root","");
+=======
+            
+
             stmt = conn.prepareStatement("SELECT tier1_city FROM city WHERE city_name = ?");
             stmt.setString(1, city_name);
             rs = stmt.executeQuery();
@@ -117,6 +121,8 @@ public class PolicyService {
         return illnessPremium;
     }
 
+    }
+
 
 
     public Policy calculatePremium(Member member) {
@@ -125,7 +131,10 @@ public class PolicyService {
         p.setGender(member.getGender());
         p.setAge(calculateAge(member.getDob()));
         p.setIstier1City(isTier1City(member.getCity()));
+
         p.setIllnesspremium(illnessCheck(member.getIllnessDetails()));
+
+     
 
 
         session.insert(p);
