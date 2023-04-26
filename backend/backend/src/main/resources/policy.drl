@@ -10,6 +10,17 @@ then
 end
 
 
+rule "Add age-based premium"
+when
+    policy : Policy(age != null)
+then
+    int age = policy.getAge();
+    double ageFactor = Math.ceil(age / 5.0);
+    double ageBasedPremium = ageFactor * (policy.getPremium() * 0.05);
+    policy.setPremium(policy.getPremium() + ageBasedPremium);
+end
+
+
 
 rule "Add gender-based premium"
 when
@@ -22,6 +33,8 @@ then
         policy.setPremium(policy.getPremium() + 500);
     }
 end
+
+
 
 
 rule "Add tobacco user premium"
@@ -39,19 +52,17 @@ then
     policy.setPremium(policy.getPremium() + 1000);
 end
 
-rule "Add age-based premium"
+
+rule "Update Premium with Illness Premium"
 when
-    policy : Policy(age != null)
+    policy: Policy(illnesspremium != null)
 then
-    int age = policy.getAge();
-    double ageFactor = Math.ceil(age / 5.0); 
-    double ageBasedPremium = ageFactor * (policy.getPremium() * 0.05);
-    policy.setPremium(policy.getPremium() + ageBasedPremium);
+
+
+    policy.setPremium(policy.getPremium() + policy.getIllnesspremium());
 end
 
-rule "Increase premium based on illness details"
-when
-    policy : Policy(isDiabetic == true )
-then
-    policy.setPremium((policy.getPremium() + 300));
-end
+
+
+
+
