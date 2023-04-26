@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { LandingComponent } from './landing/landing.component';
 import { LoginComponent } from './login/login.component';
 import { PasswordComponent } from './password/password.component';
-import { PremiumDisplayComponent } from './premium-display/premium-display.component';
 import { RegisterComponent } from './register/register.component';
 import { Register2Component } from './register2/register2.component';
 
@@ -19,7 +18,7 @@ const routes: Routes = [
   { path: 'password', component: PasswordComponent },
   { path: 'register2', component: Register2Component} ,
   {path:'user',component:UserComponent},
-  {path:'premium',component:PremiumDisplayComponent}
+  
  
 ];
 

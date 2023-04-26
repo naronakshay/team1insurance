@@ -49,9 +49,12 @@ then
     policy.setPremium(policy.getPremium() + ageBasedPremium);
 end
 
-rule "Increase premium based on illness details"
+rule "Update Premium with Illness Premium"
 when
-    policy : Policy(isDiabetic == true )
+policy: Policy(illnessPremium != null)
 then
-    policy.setPremium((policy.getPremium() + 300));
+
+
+policy.setPremium(policy.getPremium() + policy.getIllnessPremium());
 end
+

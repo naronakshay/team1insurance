@@ -10,23 +10,14 @@ public class Policy {
 
     Boolean istier1City;
 
-   Boolean isDiabetic;
-   Boolean isHypertensive;
+   double illnessPremium;
 
-    public Boolean getDiabetic() {
-        return isDiabetic;
+    public double getIllnessPremium() {
+        return illnessPremium;
     }
 
-    public void setDiabetic(Boolean diabetic) {
-        this.isDiabetic = diabetic;
-    }
-
-    public Boolean getHypertensive() {
-        return isHypertensive;
-    }
-
-    public void setHypertensive(Boolean hypertensive) {
-        this.isHypertensive = hypertensive;
+    public void setIllnessPremium(double illnessPremium) {
+        this.illnessPremium = illnessPremium;
     }
 
     public Boolean getIstier1City() {
