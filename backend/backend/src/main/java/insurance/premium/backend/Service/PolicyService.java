@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.*;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -42,7 +43,12 @@ public class PolicyService {
         ResultSet rs = null;
         boolean isTier1City = false;
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/user_registration_db","root","");
+
+            // Establish a connection to the MySQL database
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/lookup","root","");
+=======
+            
+
             stmt = conn.prepareStatement("SELECT tier1_city FROM city WHERE city_name = ?");
             stmt.setString(1, city_name);
             rs = stmt.executeQuery();
@@ -63,14 +69,16 @@ public class PolicyService {
         return isTier1City;
     }
 
+
+
     public static double diseasePremium(String disease_name) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         double diseasePremium=0.0;
         try {
-// Establish a connection to the MySQL database
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/user_registration_db","root","");
+            // Establish a connection to the MySQL database
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/lookup","root","");
             stmt = conn.prepareStatement("SELECT additional_premium FROM disease WHERE disease_name = ?");
             stmt.setString(1, disease_name);
             rs = stmt.executeQuery();
@@ -93,25 +101,6 @@ public class PolicyService {
 
 
 
-    /*public static Boolean[] illnessCheckArray(String illnessDetails) {
-        Boolean isDiabetic = false;
-        Boolean isHypertensive = false;
-
-        String[] illnessArray = illnessDetails.split(",");
-
-        for (String illness : illnessArray) {
-            if (illness.equalsIgnoreCase("Diabetes")) {
-                isDiabetic = true;
-            }
-            if (illness.equalsIgnoreCase("Hypertension")) {
-                isHypertensive = true;
-
-            }
-        }
-            return new Boolean[]{isDiabetic,isHypertensive};
-
-
-    }*/
 
     public double illnessCheck(String illnessDetails) {
         Double illnessPremium = 0.0;
@@ -132,6 +121,9 @@ public class PolicyService {
         return illnessPremium;
     }
 
+    }
+
+
 
     public Policy calculatePremium(Member member) {
         Policy p=new Policy();
@@ -139,7 +131,10 @@ public class PolicyService {
         p.setGender(member.getGender());
         p.setAge(calculateAge(member.getDob()));
         p.setIstier1City(isTier1City(member.getCity()));
-        p.setIllnessPremium(illnessCheck(member.getIllnessDetails()));
+
+        p.setIllnesspremium(illnessCheck(member.getIllnessDetails()));
+
+     
 
 
         session.insert(p);

@@ -131,7 +131,6 @@ public class MemberController {
         Member member = memberRepo.findByEmail(email);
 
 
-
         Policy policy=policyService.calculatePremium(member);
         return policy;
 
