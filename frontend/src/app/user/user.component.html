@@ -1,18 +1,6 @@
 <app-navbar app-navbar [showButton2]="true" [disableLink]="true"></app-navbar>
 
-<!-- <div class="card">
-    <div class="card-body">
-      <h1 class="card-title">Welcome</h1>
-      <p class="card-text"></p>
-          <div class="card">
-              <div class="card-body">
-                  <h2 class="card-title"><pre>Policy Name                                   Cover Amount</pre></h2>
-                  
-              </div>
-          </div>
-      <a href="" class="btn btn-primary">Buy Premium</a>
-    </div>
-  </div> -->
+
   <div class="card" style="background-color: transparent;border: transparent;">
       <div class="card-body">
         <h1 class="card-title" style="text-align: center;">Welcome {{name}}!</h1>
@@ -61,8 +49,8 @@
                 </div>
               </div>
               <div style="margin-left: 550px;">
-                <button class="btn btn-primary btn-sm" type="button" >₹593/month</button>
-                <h6 class="text-success">₹7111 annually</h6>
+                <button class="btn btn-primary btn-sm" type="button" >₹{{monthlyPremium}}/month</button>
+                <h6 class="text-success">*₹{{annualPremium}} annually</h6>
                 
               </div>
             </div>

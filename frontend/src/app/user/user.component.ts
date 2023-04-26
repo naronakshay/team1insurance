@@ -18,8 +18,9 @@ export class UserComponent  implements OnInit  {
   member!:any;
   errorMessage: any;
   userDetails:any;
-
-
+  annualPremium:any;
+  monthlyPremium:any;
+  premiumDetails:any;
   constructor(private shareddata: DataServiceService,private userService:SendDataService) {
 
     
@@ -43,6 +44,17 @@ export class UserComponent  implements OnInit  {
         }
       );
     }
+    this.userService.getPremiumByEmail(email).subscribe(
+      (data) => {
+        this.premiumDetails = data;
+        localStorage.setItem('annualPremium',this.premiumDetails.premium);
+        this.annualPremium = localStorage.getItem('annualPremium');
+        this.monthlyPremium = Math.floor(this.annualPremium/12);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
     localStorage.removeItem('details');
     
 
