@@ -24,8 +24,8 @@ export class UserComponent  implements OnInit  {
   errorMessage: any;
   userDetails:any;
   annualPremium:any;
-  monthlyPremium:any;
-  premiumDetails:any;
+  //monthlyPremium:any;
+  //premiumDetails:any;
 
   plans!: Plan[];
   constructor(private shareddata: DataServiceService,private userService:SendDataService) {
@@ -63,7 +63,7 @@ ngOnInit(): void {
 
 
     //to get the basic premium of user by email
-    this.userService.getPremiumByEmail(email).subscribe(
+    /* this.userService.getPremiumByEmail(email).subscribe(
       (data) => {
         this.premiumDetails = data;
         localStorage.setItem('annualPremium',this.premiumDetails.premium);
@@ -73,8 +73,8 @@ ngOnInit(): void {
       (error) => {
         console.log(error);
       }
-    );
-    
+    );*/
+
 
     this.userService.getPlansByEmail(email).subscribe(
       (data) => {
