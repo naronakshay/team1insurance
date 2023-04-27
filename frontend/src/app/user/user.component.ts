@@ -2,7 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { DataServiceService } from '../data-service.service';
 import { SendDataService } from '../send-data.service';
 import jwtDecode from 'jwt-decode';
-
+interface Plan {
+  plan_id: number;
+  plan_type: string;
+  coverage: number;
+  plan_details:string;
+  finalPremium: number;
+  monthlyPremium:number;
+  cashless_hospitals:number;
+}
 
 
 @Component({
@@ -21,6 +29,11 @@ export class UserComponent  implements OnInit  {
   annualPremium:any;
   monthlyPremium:any;
   premiumDetails:any;
+
+  plans!:Plan[];
+
+  selectedPlan:any = null;
+
   constructor(private shareddata: DataServiceService,private userService:SendDataService) {
 
     
@@ -28,6 +41,9 @@ export class UserComponent  implements OnInit  {
   ngOnInit(): void {
     const email = localStorage.getItem('email'); 
     const details = localStorage.getItem('details'); 
+
+    //to get the user details by email 
+
     if (details && JSON.parse(details).email === email) { 
       this.userDetails = JSON.parse(details);
       this.name = this.userDetails.firstName.toUpperCase();
@@ -44,6 +60,13 @@ export class UserComponent  implements OnInit  {
         }
       );
     }
+    localStorage.removeItem('details');
+
+
+
+
+    //to get the basic premium of user by email
+
     this.userService.getPremiumByEmail(email).subscribe(
       (data) => {
         this.premiumDetails = data;
@@ -55,9 +78,34 @@ export class UserComponent  implements OnInit  {
         console.log(error);
       }
     );
-    localStorage.removeItem('details');
     
+   // to get plan details of member by email
 
+    this.userService.getPlansByEmail(email).subscribe(
+      (data) => {
+        localStorage.setItem('plans', JSON.stringify(data));
+        const plansData = JSON.parse(localStorage.getItem('plans') || '[]');
+        this.plans = plansData; 
+        
+
+        
+        
+
+        
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+    
+  }
+
+
+  onButtonClicked(plan: Plan) {
+    localStorage.setItem('monthlyPremium', plan.monthlyPremium.toString());
+  }
+  
 
 
   }
@@ -73,4 +121,4 @@ export class UserComponent  implements OnInit  {
 
 
 
-}
+
