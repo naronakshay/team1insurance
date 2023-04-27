@@ -10,15 +10,20 @@ public class Policy {
 
     Boolean istier1City;
 
-   double illnessPremium;
 
-    public double getIllnessPremium() {
-        return illnessPremium;
+    double illnesspremium;
+
+    public double getIllnesspremium() {
+        return illnesspremium;
     }
 
-    public void setIllnessPremium(double illnessPremium) {
-        this.illnessPremium = illnessPremium;
+    public void setIllnesspremium(double illnesspremium) {
+        this.illnesspremium = illnesspremium;
     }
+
+
+
+
 
     public Boolean getIstier1City() {
         return istier1City;

@@ -1,6 +1,7 @@
 package insurance.premium.backend.Entity;
 
 public class Plan {
+
     int plan_id;
     String plan_type;
     int coverage;
@@ -34,6 +35,7 @@ public class Plan {
     public void setCashless_hospitals(int cashless_hospitals) {
         this.cashless_hospitals = cashless_hospitals;
     }
+
 
     public int getPlan_id() {
         return plan_id;

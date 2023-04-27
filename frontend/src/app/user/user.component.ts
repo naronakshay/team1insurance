@@ -2,15 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { DataServiceService } from '../data-service.service';
 import { SendDataService } from '../send-data.service';
 import jwtDecode from 'jwt-decode';
+
+
 interface Plan {
   plan_id: number;
   plan_type: string;
   coverage: number;
+
   plan_details:string;
   finalPremium: number;
   monthlyPremium:number;
   cashless_hospitals:number;
 }
+
 
 
 @Component({
@@ -27,6 +31,7 @@ export class UserComponent  implements OnInit  {
   errorMessage: any;
   userDetails:any;
   annualPremium:any;
+
   monthlyPremium:any;
   premiumDetails:any;
 
@@ -34,15 +39,19 @@ export class UserComponent  implements OnInit  {
 
   selectedPlan:any = null;
 
+
   constructor(private shareddata: DataServiceService,private userService:SendDataService) {
 
     
   }
-  ngOnInit(): void {
+
+
+ngOnInit(): void {
+
+
     const email = localStorage.getItem('email'); 
     const details = localStorage.getItem('details'); 
 
-    //to get the user details by email 
 
     if (details && JSON.parse(details).email === email) { 
       this.userDetails = JSON.parse(details);
@@ -66,8 +75,7 @@ export class UserComponent  implements OnInit  {
 
 
     //to get the basic premium of user by email
-
-    this.userService.getPremiumByEmail(email).subscribe(
+    /* this.userService.getPremiumByEmail(email).subscribe(
       (data) => {
         this.premiumDetails = data;
         localStorage.setItem('annualPremium',this.premiumDetails.premium);
@@ -77,9 +85,10 @@ export class UserComponent  implements OnInit  {
       (error) => {
         console.log(error);
       }
-    );
-    
-   // to get plan details of member by email
+    );*/
+
+
+   
 
     this.userService.getPlansByEmail(email).subscribe(
       (data) => {
@@ -109,6 +118,9 @@ export class UserComponent  implements OnInit  {
 
 
   }
+
+  // to getvthe plans a user can be offered by email
+  
   
   
 
@@ -118,7 +130,6 @@ export class UserComponent  implements OnInit  {
   
   
   
-
 
 
 

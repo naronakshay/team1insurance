@@ -16,7 +16,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.ArrayList;
+
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.ArrayList;
+import java.util.Date;
+
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -121,6 +128,8 @@ public class MemberController {
         }
         return (isEmailValid && isPasswordValid);
     }
+    
+    
     @GetMapping("/premiums/{email}")
     public List<Plan> getPlanDetails(@PathVariable String email)
     {
@@ -144,4 +153,3 @@ public class MemberController {
     }
 
 
-}

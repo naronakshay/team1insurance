@@ -9,8 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.*;
+
 import java.util.ArrayList;
 import java.util.Calendar;
+
+import java.util.*;
+
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +29,7 @@ public class PolicyService {
 
 
 
+    //calculate age of a person from the date of birth
     public static int calculateAge(Date dateOfBirth) {
         Calendar dob = Calendar.getInstance();
         dob.setTime(dateOfBirth);
@@ -39,18 +44,27 @@ public class PolicyService {
     }
 
 
+    // to check whether a user belong to tier_1 city or not
     public static boolean isTier1City(String city_name) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         boolean isTier1City = false;
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/user_registration_db","root","");
-            stmt = conn.prepareStatement("SELECT tier_1 FROM city WHERE city_name = ?");
+
+
+
+            // Establish a connection to the MySQL database
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/lookup","root","");
+            stmt = conn.prepareStatement("SELECT tier1_city FROM city WHERE city_name = ?");
+
             stmt.setString(1, city_name);
+            //execute the query and stores the result in rs
             rs = stmt.executeQuery();
             if (rs.next()) {
-                isTier1City = rs.getBoolean("tier_1");
+
+                isTier1City = rs.getBoolean("tier1_city");
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -66,16 +80,20 @@ public class PolicyService {
         return isTier1City;
     }
 
+
+
+    //calculate the additional amount a user need to pay extra for pre-exsisting illness one by one
     public static double diseasePremium(String disease_name) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         double diseasePremium=0.0;
         try {
-// Establish a connection to the MySQL database
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/user_registration_db","root","");
+            // Establish a connection to the MySQL database
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/lookup","root","");
             stmt = conn.prepareStatement("SELECT additional_premium FROM disease WHERE disease_name = ?");
             stmt.setString(1, disease_name);
+            //execite the query
             rs = stmt.executeQuery();
             if (rs.next()) {
                 diseasePremium = rs.getDouble("additional_premium");
@@ -98,43 +116,48 @@ public class PolicyService {
 
 
 
-
+    //calculate and return the additional premium for  user for all dieases
     public double illnessCheck(String illnessDetails) {
         Double illnessPremium = 0.0;
         String[] illnessArray = illnessDetails.split(",");
         for (int i = 0; i < illnessArray.length; i++){
-            System.out.println(illnessArray[i]);
+
             double premium=diseasePremium(illnessArray[i].trim());
-            System.out.println(premium);
+
             illnessPremium+=premium;
 
         }
-
-
-
-
-
-
         return illnessPremium;
     }
 
 
+
+
+
+    //calculate the basic preimum amount for a person
     public Policy calculatePremium(Member member) {
+
         Policy p=new Policy();
+        //sets the required variables to calculate premium for a user in policy
         p.setIstobaccoUser(member.getTobaccoUser());
         p.setGender(member.getGender());
         p.setAge(calculateAge(member.getDob()));
         p.setIstier1City(isTier1City(member.getCity()));
-        p.setIllnessPremium(illnessCheck(member.getIllnessDetails()));
+        p.setIllnesspremium(illnessCheck(member.getIllnessDetails()));
 
 
+        //insert object p into session and fire the rules in the drl file
         session.insert(p);
         session.fireAllRules();
 
-
+        //return the object after calculating the premium
         return p;
-
     }
+
+
+
+ 
+
 
     //calculate the basic preimum amount for a person
 
@@ -239,3 +262,4 @@ public class PolicyService {
     }
 
 }
+

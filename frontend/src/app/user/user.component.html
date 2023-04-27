@@ -9,15 +9,18 @@
     <div class="container py-5">
       <div class="row justify-content-center mb-3">
         <div class="col-md-12 col-xl-10" *ngFor="let plan of plans">
+
           <div class="card shadow-0 border rounded-3 mb-3">
+
             <div class="card-body">
               <div class="row">
                 <div class="col-md-6 col-lg-6 col-xl-4 ">
                   <div class="bg-image hover-zoom ripple rounded ripple-surface">
 
+
                     <h2 style="text-align: center;font-weight: bold;">{{plan.plan_type}}</h2>
                     <div class="mt-1 mb-0 text-muted small" style="text-align: center;">
-                      <span class="text-primary"> • </span>
+       <span class="text-primary"> • </span>
                       <span>{{plan.plan_details.split(",")[0] || ""}}</span> <br/>
                       <span class="text-primary"> • </span>
                       <span>{{plan.plan_details.split(",")[1] || ""}}</span> <br/>
@@ -49,8 +52,11 @@
                 </div>
               </div>
               <div style="margin-left: 550px;">
+
                 <button class="btn btn-primary btn-sm" type="button" (click)="selectedPlan = plan"(click)="onButtonClicked(plan)"
                 [disabled]="selectedPlan && selectedPlan !== plan">₹{{plan.monthlyPremium}}/month</button>
+                
+
                 <h6 class="text-success">*₹{{plan.finalPremium}} annually</h6>
                 
               </div>
