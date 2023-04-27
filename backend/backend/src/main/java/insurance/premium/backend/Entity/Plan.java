@@ -6,7 +6,35 @@ public class Plan {
     String plan_type;
     int coverage;
 
+    String plan_details;
     double finalPremium;
+    int monthlyPremium;
+
+    public int getMonthlyPremium() {
+        return monthlyPremium;
+    }
+
+    public void setMonthlyPremium(int monthlyPremium) {
+        this.monthlyPremium = monthlyPremium;
+    }
+
+    int cashless_hospitals;
+
+    public String getPlan_details() {
+        return plan_details;
+    }
+
+    public void setPlan_details(String plan_details) {
+        this.plan_details = plan_details;
+    }
+
+    public int getCashless_hospitals() {
+        return cashless_hospitals;
+    }
+
+    public void setCashless_hospitals(int cashless_hospitals) {
+        this.cashless_hospitals = cashless_hospitals;
+    }
 
 
     public int getPlan_id() {

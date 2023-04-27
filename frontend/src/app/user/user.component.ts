@@ -3,12 +3,19 @@ import { DataServiceService } from '../data-service.service';
 import { SendDataService } from '../send-data.service';
 import jwtDecode from 'jwt-decode';
 
+
 interface Plan {
   plan_id: number;
   plan_type: string;
   coverage: number;
+
+  plan_details:string;
   finalPremium: number;
+  monthlyPremium:number;
+  cashless_hospitals:number;
 }
+
+
 
 @Component({
   selector: 'app-user',
@@ -24,10 +31,15 @@ export class UserComponent  implements OnInit  {
   errorMessage: any;
   userDetails:any;
   annualPremium:any;
-  //monthlyPremium:any;
-  //premiumDetails:any;
 
-  plans!: Plan[];
+  monthlyPremium:any;
+  premiumDetails:any;
+
+  plans!:Plan[];
+
+  selectedPlan:any = null;
+
+
   constructor(private shareddata: DataServiceService,private userService:SendDataService) {
 
     
@@ -40,7 +52,7 @@ ngOnInit(): void {
     const email = localStorage.getItem('email'); 
     const details = localStorage.getItem('details'); 
 
-    //to get the user details by email 
+
     if (details && JSON.parse(details).email === email) { 
       this.userDetails = JSON.parse(details);
       this.name = this.userDetails.firstName.toUpperCase();
@@ -76,12 +88,17 @@ ngOnInit(): void {
     );*/
 
 
+   
+
     this.userService.getPlansByEmail(email).subscribe(
       (data) => {
         localStorage.setItem('plans', JSON.stringify(data));
         const plansData = JSON.parse(localStorage.getItem('plans') || '[]');
-        this.plans = plansData;
-       
+        this.plans = plansData; 
+        
+
+        
+        
 
         
       },
@@ -89,8 +106,15 @@ ngOnInit(): void {
         console.log(error);
       }
     );
+
+    
   }
 
+
+  onButtonClicked(plan: Plan) {
+    localStorage.setItem('monthlyPremium', plan.monthlyPremium.toString());
+  }
+  
 
 
   }

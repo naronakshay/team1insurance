@@ -9,20 +9,23 @@
     <div class="container py-5">
       <div class="row justify-content-center mb-3">
         <div class="col-md-12 col-xl-10" *ngFor="let plan of plans">
-          <div class="card shadow-0 border rounded-3">
+
+          <div class="card shadow-0 border rounded-3 mb-3">
+
             <div class="card-body">
               <div class="row">
                 <div class="col-md-6 col-lg-6 col-xl-4 ">
                   <div class="bg-image hover-zoom ripple rounded ripple-surface">
 
-                    <h2>{{plan.plan_type}}</h2>
-                    <div class="mt-1 mb-0 text-muted small">
+
+                    <h2 style="text-align: center;font-weight: bold;">{{plan.plan_type}}</h2>
+                    <div class="mt-1 mb-0 text-muted small" style="text-align: center;">
+       <span class="text-primary"> • </span>
+                      <span>{{plan.plan_details.split(",")[0] || ""}}</span> <br/>
                       <span class="text-primary"> • </span>
-                      <span>No room rent Limit</span> <br/>
+                      <span>{{plan.plan_details.split(",")[1] || ""}}</span> <br/>
                       <span class="text-primary"> • </span>
-                      <span>₹2 Lakhs No Claim Bonus</span> <br/>
-                      <span class="text-primary"> • </span>
-                      <span>Unlimited Restoration of Cover<br /></span>
+                      <span>{{plan.plan_details.split(",")[2] || ""}}<br /></span>
                     </div>
 
 
@@ -42,14 +45,18 @@
                   <div>
                     <h3 style="color:gray;text-align: center;">Cashless Hospitals</h3>
                     
-                  <h2 style="font-weight: bold;text-align: center;">100</h2>
+                  <h2 style="font-weight: bold;text-align: center;">{{plan.cashless_hospitals}}</h2>
                   </div> 
                    
                   
                 </div>
               </div>
               <div style="margin-left: 550px;">
-                <button class="btn btn-primary btn-sm" type="button" >₹xxx/month</button>
+
+                <button class="btn btn-primary btn-sm" type="button" (click)="selectedPlan = plan"(click)="onButtonClicked(plan)"
+                [disabled]="selectedPlan && selectedPlan !== plan">₹{{plan.monthlyPremium}}/month</button>
+                
+
                 <h6 class="text-success">*₹{{plan.finalPremium}} annually</h6>
                 
               </div>
@@ -61,5 +68,7 @@
       
     </div>
   </section> 
+ 
 </div>
+<br/>
 </div> 
