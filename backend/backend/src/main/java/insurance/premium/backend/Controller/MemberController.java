@@ -2,6 +2,7 @@ package insurance.premium.backend.Controller;
 
 import insurance.premium.backend.Entity.LoginRequest;
 import insurance.premium.backend.Entity.Member;
+import insurance.premium.backend.Entity.Plan;
 import insurance.premium.backend.Entity.Policy;
 import insurance.premium.backend.Repo.MemberRepo;
 import insurance.premium.backend.Service.MemberService;
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -136,5 +139,24 @@ public class MemberController {
 
 
     }
+
+
+
+    @GetMapping("/premiums/{email}")
+    public List<Plan> calculate(@PathVariable String email) {
+        Member member = memberRepo.findByEmail(email);
+        List<Plan> plans = new ArrayList<>();
+
+
+        Policy policy=policyService.calculatePremium(member);
+        double premium=policy.getPremium();
+        plans=policyService.calculatePlans(premium);
+
+        return plans;
+
+
+    }
+
+
 
 }

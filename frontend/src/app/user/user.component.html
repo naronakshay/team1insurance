@@ -8,14 +8,14 @@
   <section style="width:80rem;">
     <div class="container py-5">
       <div class="row justify-content-center mb-3">
-        <div class="col-md-12 col-xl-10">
+        <div class="col-md-12 col-xl-10" *ngFor="let plan of plans">
           <div class="card shadow-0 border rounded-3">
             <div class="card-body">
               <div class="row">
                 <div class="col-md-6 col-lg-6 col-xl-4 ">
                   <div class="bg-image hover-zoom ripple rounded ripple-surface">
 
-                    <h2>POLICY NAME</h2>
+                    <h2>{{plan.plan_type}}</h2>
                     <div class="mt-1 mb-0 text-muted small">
                       <span class="text-primary"> • </span>
                       <span>No room rent Limit</span> <br/>
@@ -35,7 +35,7 @@
                   
                   
                   <h3 style="text-align: center;color:gray">Cover Amount</h3>
-                  <h2 style="font-weight: bold;text-align: center;">₹5 Lakhs</h2>
+                  <h2 style="font-weight: bold;text-align: center;">₹{{plan.coverage}} Lakhs</h2>
                   
                 </div>
                 <div class="col-md-5 col-lg-1 col-xl-4 mb-2 mb-lg-0 ">
@@ -50,7 +50,7 @@
               </div>
               <div style="margin-left: 550px;">
                 <button class="btn btn-primary btn-sm" type="button" >₹{{monthlyPremium}}/month</button>
-                <h6 class="text-success">*₹{{annualPremium}} annually</h6>
+                <h6 class="text-success">*₹{{plan.finalPremium}} annually</h6>
                 
               </div>
             </div>

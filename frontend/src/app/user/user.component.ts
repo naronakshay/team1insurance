@@ -3,7 +3,12 @@ import { DataServiceService } from '../data-service.service';
 import { SendDataService } from '../send-data.service';
 import jwtDecode from 'jwt-decode';
 
-
+interface Plan {
+  plan_id: number;
+  plan_type: string;
+  coverage: number;
+  finalPremium: number;
+}
 
 @Component({
   selector: 'app-user',
@@ -21,13 +26,21 @@ export class UserComponent  implements OnInit  {
   annualPremium:any;
   monthlyPremium:any;
   premiumDetails:any;
+
+  plans!: Plan[];
   constructor(private shareddata: DataServiceService,private userService:SendDataService) {
 
     
   }
-  ngOnInit(): void {
+
+
+ngOnInit(): void {
+
+
     const email = localStorage.getItem('email'); 
     const details = localStorage.getItem('details'); 
+
+    //to get the user details by email 
     if (details && JSON.parse(details).email === email) { 
       this.userDetails = JSON.parse(details);
       this.name = this.userDetails.firstName.toUpperCase();
@@ -44,6 +57,12 @@ export class UserComponent  implements OnInit  {
         }
       );
     }
+    localStorage.removeItem('details');
+
+
+
+
+    //to get the basic premium of user by email
     this.userService.getPremiumByEmail(email).subscribe(
       (data) => {
         this.premiumDetails = data;
@@ -55,12 +74,29 @@ export class UserComponent  implements OnInit  {
         console.log(error);
       }
     );
-    localStorage.removeItem('details');
     
+
+    this.userService.getPlansByEmail(email).subscribe(
+      (data) => {
+        localStorage.setItem('plans', JSON.stringify(data));
+        const plansData = JSON.parse(localStorage.getItem('plans') || '[]');
+        this.plans = plansData;
+       
+
+        
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
 
 
 
   }
+
+  // to getvthe plans a user can be offered by email
+  
   
   
 
@@ -73,4 +109,3 @@ export class UserComponent  implements OnInit  {
 
 
 
-}
