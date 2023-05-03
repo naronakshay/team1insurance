@@ -1,5 +1,6 @@
 package insurance.premium.backend.Entity;
 
+
 public class Plan {
 
     int plan_id;
@@ -37,9 +38,7 @@ public class Plan {
     }
 
 
-    public int getPlan_id() {
-        return plan_id;
-    }
+
 
     public void setPlan_id(int plan_id) {
         this.plan_id = plan_id;

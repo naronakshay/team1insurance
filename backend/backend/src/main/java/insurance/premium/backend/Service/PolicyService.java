@@ -82,7 +82,7 @@ public class PolicyService {
 
 
 
-    //calculate the additional amount a user need to pay extra for pre-exsisting illness one by one
+    //calculate the additional amount a user need to pay extra for pre-existing illness one by one
     public static double diseasePremium(String disease_name) {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -93,7 +93,7 @@ public class PolicyService {
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/lookup","root","");
             stmt = conn.prepareStatement("SELECT additional_premium FROM disease WHERE disease_name = ?");
             stmt.setString(1, disease_name);
-            //execite the query
+            //execute the query
             rs = stmt.executeQuery();
             if (rs.next()) {
                 diseasePremium = rs.getDouble("additional_premium");
@@ -173,7 +173,7 @@ public class PolicyService {
 
         try {
             // Establish a connection to the MySQL database
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/user_registration_db", "root", "");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/lookup", "root", "");
 
             // Prepare the SQL statement to retrieve the additional premium for the given plan type
             stmt = conn.prepareStatement("SELECT additional_premium FROM plans WHERE plan_type = ?");
@@ -218,7 +218,7 @@ public class PolicyService {
 
         try {
             // Establish a connection to the MySQL database
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/user_registration_db","root","");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/lookup","root","");
             stmt = conn.prepareStatement("SELECT plan_id, plan_type,plan_details, coverage,cashless_hospitals FROM plans");
             //execute the query and store result in rs
             rs = stmt.executeQuery();
