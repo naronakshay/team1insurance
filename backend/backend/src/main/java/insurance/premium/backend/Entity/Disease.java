@@ -4,7 +4,10 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
+
+=======
 
 @Entity
 
@@ -53,4 +56,6 @@ public class Disease {
 
     public Disease() {
     }
+
 }
+

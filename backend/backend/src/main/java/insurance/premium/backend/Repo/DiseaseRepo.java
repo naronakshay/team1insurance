@@ -1,6 +1,3 @@
-package insurance.premium.backend.Repo;
-
-
 
 import insurance.premium.backend.Entity.Disease;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,4 +13,6 @@ public interface DiseaseRepo extends JpaRepository<Disease, Integer> {
     Disease findByDiseaseName(String diseaseName);
 
 
+
 }
+

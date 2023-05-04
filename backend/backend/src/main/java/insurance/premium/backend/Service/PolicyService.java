@@ -1,7 +1,14 @@
 package insurance.premium.backend.Service;
 
+
 import insurance.premium.backend.Entity.*;
 import insurance.premium.backend.Repo.CityRepo;
+
+import insurance.premium.backend.Entity.Disease;
+import insurance.premium.backend.Entity.Member;
+import insurance.premium.backend.Entity.Plan;
+import insurance.premium.backend.Entity.Policy;
+
 import insurance.premium.backend.Repo.DiseaseRepo;
 import insurance.premium.backend.Repo.MemberRepo;
 import insurance.premium.backend.Repo.PlansRepo;
@@ -31,15 +38,38 @@ public class PolicyService {
     @Autowired
     private PlansRepo plansRepo;
 
+   
+
+
+
     @Autowired
     private DiseaseRepo diseaseRepo;
 
+
     @Autowired
     private CityRepo cityRepo;
-
-    public PolicyService(DiseaseRepo diseaseRepo) {
-        this.diseaseRepo = diseaseRepo;
+=======
+    //calculate age of a person from the date of birth
+    public static int calculateAge(Date dateOfBirth) throws IllegalArgumentException {
+        try {
+            Calendar dob = Calendar.getInstance();
+            dob.setTime(dateOfBirth);
+            Calendar today = Calendar.getInstance();
+            int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
+            if (today.get(Calendar.MONTH) < dob.get(Calendar.MONTH)) {
+                age--;
+            } else if (today.get(Calendar.MONTH) == dob.get(Calendar.MONTH) && today.get(Calendar.DAY_OF_MONTH) < dob.get(Calendar.DAY_OF_MONTH)) {
+                age--;
+            }
+            return age;
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Invalid date of birth", e);
+        }
     }
+
+
+
+   
 
 
 
@@ -129,7 +159,6 @@ public class PolicyService {
         //return the object after calculating the premium
         return p;
     }
-
 
 
 

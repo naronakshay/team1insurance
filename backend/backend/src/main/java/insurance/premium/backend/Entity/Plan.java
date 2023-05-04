@@ -2,10 +2,11 @@ package insurance.premium.backend.Entity;
 
 import jakarta.persistence.*;
 
+
+
 @Entity
 @Table(name = "plans")
 public class Plan {
-
     @Id
     @Column(name = "plan_id")
 
@@ -74,10 +75,14 @@ public class Plan {
         this.cashless_hospitals = cashless_hospitals;
     }
 
+    public Plan() {
+    }
+
 
     public void setPlan_id(int plan_id) {
         this.plan_id = plan_id;
     }
+
 
     public String getPlanType() {
         return planType;
@@ -103,6 +108,5 @@ public class Plan {
         this.finalPremium = finalPremium;
     }
 }
-
 
 
