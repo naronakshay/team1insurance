@@ -69,8 +69,6 @@ public class PolicyService {
 
 
 
-   
-
 
 
     //calculate age of a person from the date of birth
@@ -99,6 +97,7 @@ public class PolicyService {
         return city.isTier_1();
     }
 
+    
     //calculate the additional amount a user need to pay extra for pre-existing illness one by one
     public  double diseasePremium(String disease_name) {
         double diseasePremium=0.0;

@@ -1,5 +1,4 @@
 package insurance.premium.backend.Controller;
-
 import insurance.premium.backend.Entity.LoginRequest;
 import insurance.premium.backend.Entity.Member;
 import insurance.premium.backend.Entity.Plan;
@@ -20,12 +19,10 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.ArrayList;
-
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.Date;
-
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
