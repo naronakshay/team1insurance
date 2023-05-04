@@ -1,17 +1,17 @@
 package insurance.premium.backend.Repo;
 
-import insurance.premium.backend.Entity.Member;
+import insurance.premium.backend.Entity.Disease;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 
-@EnableJpaRepositories
+import java.util.List;
+
 @Repository
-public interface MemberRepo extends JpaRepository<Member,String> {
+public interface DiseaseRepo extends JpaRepository<Disease, Integer> {
 
-    Member findByEmail(String email);
-
-
+    List<Disease> findAll();
+    Disease findByDiseaseName(String diseaseName);
 
 
 }
