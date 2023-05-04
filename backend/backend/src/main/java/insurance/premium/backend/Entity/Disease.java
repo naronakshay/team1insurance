@@ -5,7 +5,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+
+=======
+
 @Entity
+
 @Table(name = "disease")
 public class Disease {
 
@@ -51,4 +56,6 @@ public class Disease {
 
     public Disease() {
     }
+
 }
+

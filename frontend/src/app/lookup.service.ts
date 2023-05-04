@@ -4,16 +4,16 @@ import { Observable } from 'rxjs';
 
 interface State{
   state_id : number;
-  name: String;
-
+  state_name: String;
 
 }
 
 interface City {
 
-  state_id:number;
   city_id: number;
   city_name: string;
+  tier_1:boolean;
+  state:State
 }
 
 interface Disease{
@@ -32,7 +32,7 @@ interface Disease{
 export class LookupService  {
 
  
-  private baseUrl = 'http://localhost:3000';
+  private baseUrl = 'http://localhost:8080/api/v1/member';
 
   constructor(private http: HttpClient) { }
   
