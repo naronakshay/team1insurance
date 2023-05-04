@@ -1,42 +1,29 @@
 package insurance.premium.backend.Controller;
 import insurance.premium.backend.Entity.LoginRequest;
 import insurance.premium.backend.Entity.Member;
-import insurance.premium.backend.Entity.Plan;
-import insurance.premium.backend.Entity.Policy;
 import insurance.premium.backend.Exceptions.MemberNotFoundException;
 import insurance.premium.backend.Exceptions.MemberRegistrationException;
-import insurance.premium.backend.Repo.MemberRepo;
 import insurance.premium.backend.Service.MemberService;
-import insurance.premium.backend.Service.PolicyService;
 import insurance.premium.backend.security.JwtUtil;
-import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 
-import java.util.ArrayList;
-import java.time.LocalDate;
-import java.time.Period;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("api/v1/member")
 public class MemberController {
 
-    @Autowired
-    private JwtUtil jwtUtil;
+
     @Autowired
     private MemberService memberService;
 
-    @Autowired
-    private PolicyService policyService;
+
+
 
     //register the new user into the database
     @PostMapping("/register")

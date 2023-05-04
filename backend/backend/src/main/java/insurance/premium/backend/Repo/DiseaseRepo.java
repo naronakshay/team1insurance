@@ -1,3 +1,4 @@
+package insurance.premium.backend.Repo;
 
 import insurance.premium.backend.Entity.Disease;
 import org.springframework.data.jpa.repository.JpaRepository;

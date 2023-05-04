@@ -136,7 +136,7 @@
                 <mat-form-field class = "together"appearance="fill" >
                   <mat-label>City</mat-label>
                   <mat-select formControlName="city" >
-                    <mat-option *ngFor="let item of cities" value={{item.city_name}} >{{item.city_name}}</mat-option>
+                    <mat-option *ngFor="let item of cities" value={{item.cityName}} >{{item.cityName}}</mat-option>
                   </mat-select>
                   <mat-error *ngIf="form.get('city')?.hasError('required')">
                        Required.

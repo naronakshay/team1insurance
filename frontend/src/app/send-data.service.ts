@@ -17,7 +17,6 @@ export class SendDataService {
   public currentUser!: Observable<any>;
 
   constructor(private http: HttpClient) {}
-   
 
   register(data: any): Observable<any> {
     return this.http.post<any>(this.apiUrl, data).pipe(
@@ -32,8 +31,6 @@ export class SendDataService {
   
   }
 
- 
-
   login(email: string, password: string) {
     return this.http.post<string>(this.loginUrl, {email,password}, { responseType: 'text' as 'json' });
 
@@ -41,18 +38,12 @@ export class SendDataService {
 
 
   logout() {
-   
-
-    sessionStorage.removeItem('token'); 
+      sessionStorage.removeItem('token'); 
       localStorage.removeItem('token');
       localStorage.removeItem('email');
       localStorage.removeItem('details');
       sessionStorage.removeItem('email');
       localStorage.clear();
-
-      
-
-
   }
 
   getMemberByEmail(email: string | null): Observable<any> {
@@ -66,10 +57,5 @@ export class SendDataService {
     return this.http.get(`${this.plansUrl}/${email}`);
 
   }
-
-
- 
-
-
   
 }

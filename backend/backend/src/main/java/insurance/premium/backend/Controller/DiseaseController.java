@@ -21,7 +21,6 @@ public class DiseaseController {
 
     @GetMapping("/disease")
     public List<Disease> getAllDiseases(){
-
         return diseaseRepo.findAll();
 
     }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { StateKey } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -20,7 +20,7 @@ interface DiseaseMap {
   templateUrl: './register2.component.html',
   styleUrls: ['./register2.component.css']
 })
-export class Register2Component {
+export class Register2Component implements OnInit {
 
   
   selectedOption: boolean = false;
@@ -33,17 +33,6 @@ export class Register2Component {
   disease!: any[];
 
  
-  
-
- 
-
-  
-
-
-
-  
-  
-
   
 
 

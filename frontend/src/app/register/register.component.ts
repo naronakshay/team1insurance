@@ -11,18 +11,18 @@ import { DataServiceService } from '../data-service.service';
 
 
  interface City {
-  
+
+  state_id:number;
   city_id: number;
-  city_name: string;
+  cityName: string;
   tier_1:boolean;
-  state:State
+  
 }
 
 
 interface State{
   state_id : number;
   state_name: String;
-
 
 }
 

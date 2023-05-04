@@ -1,5 +1,4 @@
 package insurance.premium.backend.Service;
-
 import insurance.premium.backend.Entity.LoginRequest;
 import insurance.premium.backend.Entity.Member;
 import insurance.premium.backend.Exceptions.MemberNotFoundException;
@@ -7,15 +6,8 @@ import insurance.premium.backend.Exceptions.MemberRegistrationException;
 import insurance.premium.backend.Repo.MemberRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
-import java.time.Period;
-import java.util.Calendar;
-import java.util.Date;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -61,7 +53,7 @@ public class MemberServiceImpl implements MemberService {
 
 
     // checking the authentication of user
-    public boolean login(LoginRequest loginRequest) {
+    public Boolean login(LoginRequest loginRequest) {
         String email = loginRequest.getEmail();
         String password = loginRequest.getPassword();
         BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();

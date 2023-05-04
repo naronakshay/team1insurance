@@ -10,10 +10,11 @@ interface State{
 
 interface City {
 
+  state_id:number;
   city_id: number;
-  city_name: string;
+  cityName: string;
   tier_1:boolean;
-  state:State
+  
 }
 
 interface Disease{
