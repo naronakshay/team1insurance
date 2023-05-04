@@ -118,7 +118,7 @@ public class PolicyService {
             p.setGender(member.getGender());
             p.setAge(calculateAge(member.getDob()));
             p.setIstier1City(isTier1City(member.getCity()));
-            p.setIllnessPremium(illnessCheck(member.getIllnessDetails()));
+            p.setIllnesspremium(illnessCheck(member.getIllnessDetails()));
             //insert object p into session and fire the rules in the drl file
             session.insert(p);
             session.fireAllRules();
