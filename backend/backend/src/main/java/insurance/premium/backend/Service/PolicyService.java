@@ -52,6 +52,11 @@ public class PolicyService {
     }
 
 
+
+
+
+
+
     // to check whether a user belong to tier_1 city or not
     public boolean isTier1City(String city_name) {
 
