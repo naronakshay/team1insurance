@@ -11,15 +11,13 @@ import { UserComponent } from './user/user.component';
 
 
 const routes: Routes = [
-
   { path: '', component: LandingComponent },
   {path:'login',component:LoginComponent},
   { path: 'register', component: RegisterComponent },
   { path: 'password', component: PasswordComponent },
   { path: 'register2', component: Register2Component} ,
   {path:'user',component:UserComponent},
-  
- 
+
 ];
 
 @NgModule({

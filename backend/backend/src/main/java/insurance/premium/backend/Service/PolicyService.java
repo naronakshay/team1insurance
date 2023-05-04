@@ -68,9 +68,6 @@ public class PolicyService {
         ResultSet rs = null;
         boolean isTier1City = false;
         try {
-
-
-
             // Establish a connection to the MySQL database
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/lookup","root","");
             stmt = conn.prepareStatement("SELECT tier1_city FROM city WHERE city_name = ?");
@@ -99,6 +96,7 @@ public class PolicyService {
 
 
 
+    
     //calculate the additional amount a user need to pay extra for pre-existing illness one by one
     public  double diseasePremium(String disease_name) {
         double diseasePremium=0.0;
