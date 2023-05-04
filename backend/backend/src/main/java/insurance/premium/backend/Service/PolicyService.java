@@ -1,16 +1,21 @@
 package insurance.premium.backend.Service;
 
-import insurance.premium.backend.Entity.Member;
-import insurance.premium.backend.Entity.Plan;
-import insurance.premium.backend.Entity.Policy;
+import insurance.premium.backend.Entity.*;
+import insurance.premium.backend.Repo.CityRepo;
+import insurance.premium.backend.Repo.DiseaseRepo;
 import insurance.premium.backend.Repo.MemberRepo;
+import insurance.premium.backend.Repo.PlansRepo;
 import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.*;
+
 import java.util.ArrayList;
 import java.util.Calendar;
+
+import java.util.*;
+
 import java.util.Date;
 import java.util.List;
 
@@ -23,73 +28,57 @@ public class PolicyService {
     @Autowired
     private MemberRepo memberRepo;
 
+    @Autowired
+    private PlansRepo plansRepo;
 
+    @Autowired
+    private DiseaseRepo diseaseRepo;
 
-    public static int calculateAge(Date dateOfBirth) {
-        Calendar dob = Calendar.getInstance();
-        dob.setTime(dateOfBirth);
-        Calendar today = Calendar.getInstance();
-        int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
-        if (today.get(Calendar.MONTH) < dob.get(Calendar.MONTH)) {
-            age--;
-        } else if (today.get(Calendar.MONTH) == dob.get(Calendar.MONTH) && today.get(Calendar.DAY_OF_MONTH) < dob.get(Calendar.DAY_OF_MONTH)) {
-            age--;
-        }
-        return age;
+    @Autowired
+    private CityRepo cityRepo;
+
+    public PolicyService(DiseaseRepo diseaseRepo) {
+        this.diseaseRepo = diseaseRepo;
     }
 
 
-    public static boolean isTier1City(String city_name) {
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        boolean isTier1City = false;
+
+    //calculate age of a person from the date of birth
+    public static int calculateAge(Date dateOfBirth) throws IllegalArgumentException {
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/user_registration_db","root","");
-            stmt = conn.prepareStatement("SELECT tier_1 FROM city WHERE city_name = ?");
-            stmt.setString(1, city_name);
-            rs = stmt.executeQuery();
-            if (rs.next()) {
-                isTier1City = rs.getBoolean("tier_1");
+            Calendar dob = Calendar.getInstance();
+            dob.setTime(dateOfBirth);
+            Calendar today = Calendar.getInstance();
+            int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
+            if (today.get(Calendar.MONTH) < dob.get(Calendar.MONTH)) {
+                age--;
+            } else if (today.get(Calendar.MONTH) == dob.get(Calendar.MONTH) && today.get(Calendar.DAY_OF_MONTH) < dob.get(Calendar.DAY_OF_MONTH)) {
+                age--;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (rs != null) rs.close();
-                if (stmt != null) stmt.close();
-                if (conn != null) conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            return age;
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Invalid date of birth", e);
         }
-        return isTier1City;
     }
 
-    public static double diseasePremium(String disease_name) {
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
+
+    // to check whether a user belong to tier_1 city or not
+    public boolean isTier1City(String city_name) {
+
+        City city = cityRepo.findByCityName(city_name);
+        return city.isTier_1();
+    }
+
+    //calculate the additional amount a user need to pay extra for pre-existing illness one by one
+    public  double diseasePremium(String disease_name) {
         double diseasePremium=0.0;
+        Disease disease = diseaseRepo.findByDiseaseName(disease_name);
         try {
-// Establish a connection to the MySQL database
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/user_registration_db","root","");
-            stmt = conn.prepareStatement("SELECT additional_premium FROM disease WHERE disease_name = ?");
-            stmt.setString(1, disease_name);
-            rs = stmt.executeQuery();
-            if (rs.next()) {
-                diseasePremium = rs.getDouble("additional_premium");
+            if (disease != null) {
+                diseasePremium = disease.getAdditional_premium();
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (rs != null) rs.close();
-                if (stmt != null) stmt.close();
-                if (conn != null) conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
         return diseasePremium;
     }
@@ -98,84 +87,70 @@ public class PolicyService {
 
 
 
-
+    //calculate and return the additional premium for  user for all disease
     public double illnessCheck(String illnessDetails) {
         Double illnessPremium = 0.0;
         String[] illnessArray = illnessDetails.split(",");
         for (int i = 0; i < illnessArray.length; i++){
-            System.out.println(illnessArray[i]);
-            double premium=diseasePremium(illnessArray[i].trim());
-            System.out.println(premium);
-            illnessPremium+=premium;
-
+            try {
+                double premium=diseasePremium(illnessArray[i].trim());
+                illnessPremium+=premium;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return 0.0;
+            }
         }
-
-
-
-
-
-
         return illnessPremium;
     }
 
 
+
+
+
+
+    //calculate the basic premium amount for a person
     public Policy calculatePremium(Member member) {
+
         Policy p=new Policy();
-        p.setIstobaccoUser(member.getTobaccoUser());
-        p.setGender(member.getGender());
-        p.setAge(calculateAge(member.getDob()));
-        p.setIstier1City(isTier1City(member.getCity()));
-        p.setIllnessPremium(illnessCheck(member.getIllnessDetails()));
-
-
-        session.insert(p);
-        session.fireAllRules();
-
-
+        //sets the required variables to calculate premium for a user in policy
+        try {
+            p.setIstobaccoUser(member.getTobaccoUser());
+            p.setGender(member.getGender());
+            p.setAge(calculateAge(member.getDob()));
+            p.setIstier1City(isTier1City(member.getCity()));
+            p.setIllnessPremium(illnessCheck(member.getIllnessDetails()));
+            //insert object p into session and fire the rules in the drl file
+            session.insert(p);
+            session.fireAllRules();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        //return the object after calculating the premium
         return p;
-
     }
 
-    //calculate the basic preimum amount for a person
+
+
+
+
 
 
     // calculate the additional premium for each type  of plans according to plan type
     public double calculateAdditionalPremium(String planType, double basicPremium){
 
-
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
         double additionalPremium = 0;
 
         try {
-            // Establish a connection to the MySQL database
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/user_registration_db", "root", "");
-
-            // Prepare the SQL statement to retrieve the additional premium for the given plan type
-            stmt = conn.prepareStatement("SELECT additional_premium FROM plans WHERE plan_type = ?");
-            stmt.setString(1, planType);
-
-            // Execute the SQL query and retrieve the additional premium
-            rs = stmt.executeQuery();
-            if (rs.next()) {
-                additionalPremium = rs.getDouble("additional_premium");
+            Plan plan = plansRepo.findByPlanType(planType);
+            if (plan != null) {
+                additionalPremium = plan.getAdditional_premium();
             }
-        } catch (SQLException e) {
+        } catch (Exception  e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (rs != null) rs.close();
-                if (stmt != null) stmt.close();
-                if (conn != null) conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
-
         return additionalPremium;
     }
-
 
 
 
@@ -186,56 +161,23 @@ public class PolicyService {
     // Return the  types of plans that can be provied to  users based on calculated premium
     public List<Plan> calculatePlans(double premium){
 
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
         double basicPremium = premium;
-        //create plan list to add diffrernt plans
-        List<Plan> plans = new ArrayList<>();
-
+        //create plan list to add all plans in database
+        List<Plan> plans = plansRepo.findAll();
+        //take each the plans and calculate and add the final premium for all plans into the plan entity
         try {
-            // Establish a connection to the MySQL database
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/user_registration_db","root","");
-            stmt = conn.prepareStatement("SELECT plan_id, plan_type,plan_details, coverage,cashless_hospitals FROM plans");
-            //execute the query and store result in rs
-            rs = stmt.executeQuery();
-
-
-            while (rs.next()) {
-                //create a new object plan to store plan details
-                Plan plan = new Plan();
-                plan.setPlan_id(rs.getInt("plan_id"));
-                plan.setPlan_type(rs.getString("plan_type"));
-                plan.setCoverage(rs.getInt("coverage"));
-                plan.setPlan_details(rs.getString("plan_details"));
-                plan.setCashless_hospitals(rs.getInt("cashless_hospitals"));
-                //calculate the additional premium and add it to basic premium and store in plan object
-                double additionalPremium = calculateAdditionalPremium(plan.getPlan_type(), basicPremium);
+            for (Plan plan : plans) {
+                double additionalPremium = calculateAdditionalPremium(plan.getPlanType(), basicPremium);
                 double finalPremium = basicPremium + additionalPremium;
                 plan.setFinalPremium(finalPremium);
-                plan.setMonthlyPremium((int)plan.getFinalPremium()/12);
-
-                //store each plan in plans list
-                plans.add(plan);
-
-
-
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (rs != null) rs.close();
-                if (stmt != null) stmt.close();
-                if (conn != null) conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
+                plan.setMonthlyPremium((int) plan.getFinalPremium() / 12);
             }
         }
+        catch(Exception e) {
+            e.printStackTrace();
+            plans = new ArrayList<>();
+        }
         return  plans;
-
-
     }
 
 }

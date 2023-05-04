@@ -1,16 +1,15 @@
 
 <mat-toolbar class="nav" >
-    <div class="logo-container">
-        <img src="../../assets/diversity.png" alt="Logo">
-      </div>
+  <div class="logo-container">
+      <img src="../../assets/diversity.png" alt="Logo">
+    </div>
 
-    
-      <a mat-button [routerLink]="disableLink ? null : '/'">INSURANCE</a>
+  
+    <a mat-button [routerLink]="disableLink ? null : '/'">INSURANCE</a>
 
-    <div class="spacer"></div>
-    <button mat-button *ngIf="showButton"  (click)="moveTo()">LOGIN</button>
-    <button mat-button *ngIf="showButton2"  (click)="moveTo2()">LOGOUT</button>
-    <button mat-button>ABOUT US</button>
+  <div class="spacer"></div>
+  <button mat-button *ngIf="showButton"  (click)="moveTo()">LOGIN</button>
+  <button mat-button *ngIf="showButton2"  (click)="moveTo2()">LOGOUT</button>
+ 
 </mat-toolbar>
-
 

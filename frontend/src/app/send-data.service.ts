@@ -48,6 +48,7 @@ export class SendDataService {
       localStorage.removeItem('email');
       localStorage.removeItem('details');
       sessionStorage.removeItem('email');
+      localStorage.clear();
 
       
 

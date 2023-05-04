@@ -4,6 +4,8 @@ import insurance.premium.backend.Entity.LoginRequest;
 import insurance.premium.backend.Entity.Member;
 import insurance.premium.backend.Entity.Plan;
 import insurance.premium.backend.Entity.Policy;
+import insurance.premium.backend.Exceptions.MemberNotFoundException;
+import insurance.premium.backend.Exceptions.MemberRegistrationException;
 import insurance.premium.backend.Repo.MemberRepo;
 import insurance.premium.backend.Service.MemberService;
 import insurance.premium.backend.Service.PolicyService;
@@ -16,7 +18,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.ArrayList;
+
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.ArrayList;
+import java.util.Date;
+
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -26,122 +35,53 @@ public class MemberController {
 
     @Autowired
     private JwtUtil jwtUtil;
-
-    @Autowired
-    private KieSession session;
     @Autowired
     private MemberService memberService;
 
     @Autowired
-    private MemberRepo memberRepo;
-
-    @Autowired
     private PolicyService policyService;
 
+    //register the new user into the database
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody Member member) {
         try {
             Member registeredMember = memberService.registerMember(member);
             return new ResponseEntity<>(registeredMember, HttpStatus.CREATED);
-        } catch (DataIntegrityViolationException ex) {
-
-            if (ex.getMessage().contains("email")) {
-                return new ResponseEntity<>("Email address already exists", HttpStatus.BAD_REQUEST);
-            } else if (ex.getMessage().contains("gov_id")) {
-                return new ResponseEntity<>("Government ID already exists", HttpStatus.BAD_REQUEST);
-            } else {
-                return new ResponseEntity<>("An error occurred while registering the member", HttpStatus.INTERNAL_SERVER_ERROR);
-            }
+        } catch (MemberRegistrationException ex) {
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
-
     }
 
 
+    //return the details of the user by email
     @GetMapping("/user/{email}")
-    public Member getUserByEmail(@PathVariable String email) {
-
-        Member member = memberRepo.findByEmail(email);
-        return member;
+    public ResponseEntity<?> getUserByEmail(@PathVariable String email) {
+        try {
+            Member member = memberService.getMemberByEmail(email);
+            return new ResponseEntity<>(member, HttpStatus.OK);
+        } catch (MemberNotFoundException ex) {
+            return new ResponseEntity<>("Member not found for email: " + email, HttpStatus.NOT_FOUND);
+        } catch (Exception ex) {
+            return new ResponseEntity<>("An error occurred while fetching member details", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 
-
-
-
-
-
-
-
+    // checks the authentication of the user and returns jwt token if authenticated
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        String email = loginRequest.getEmail();
-        String password = loginRequest.getPassword();
-
-
-        if (isValidUser(email, password)) {
-
-            String token = JwtUtil.generateToken(email);
-            return ResponseEntity.ok(token);
-
-        } else {
-            if (!isValidEmail(email)) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid email");
+        try {
+            if (memberService.login(loginRequest)) {
+                String token = JwtUtil.generateToken(loginRequest.getEmail());
+                return ResponseEntity.ok(token);
             } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid password");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
             }
+        } catch (MemberNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid email or password");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
         }
     }
-
-    private boolean isValidEmail(String email) {
-
-
-        Member member = memberRepo.findByEmail(email);
-        if (member != null) {
-            return true;
-        }
-
-        return false;
-}
-
-
-    private boolean isValidUser(String email, String password) {
-        boolean isEmailValid = false;
-        boolean isPasswordValid = false;
-        BCryptPasswordEncoder bcrypt=new BCryptPasswordEncoder();
-        Member member = memberRepo.findByEmail(email);
-        if(member != null)
-        {
-            if(bcrypt.matches(password,member.getPassword()))
-            {
-                isEmailValid = true;
-                isPasswordValid = true;
-            } else {
-                isEmailValid = true;
-            }
-        }
-        return (isEmailValid && isPasswordValid);
-    }
-    @GetMapping("/premiums/{email}")
-    public List<Plan> getPlanDetails(@PathVariable String email)
-    {
-        Member member = memberRepo.findByEmail(email);
-        List<Plan> plans = new ArrayList<>();
-        Policy policy = policyService.calculatePremium(member);
-        double premium = policy.getPremium();
-        plans = policyService.calculatePlans(premium);
-
-        return plans;
-
-
-    }
-
-
-    @GetMapping("/premium/{email}")
-    public Policy getPremium(@PathVariable String email) {
-        Member member = memberRepo.findByEmail(email);
-        Policy policy=policyService.calculatePremium(member);
-        return policy;
-    }
-
 
 }
