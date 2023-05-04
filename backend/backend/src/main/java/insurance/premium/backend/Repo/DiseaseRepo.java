@@ -14,4 +14,6 @@ public interface DiseaseRepo extends JpaRepository<Disease, Integer> {
     Disease findByDiseaseName(String diseaseName);
 
 
+
 }
+

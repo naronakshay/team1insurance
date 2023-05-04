@@ -10,17 +10,19 @@ import { DataServiceService } from '../data-service.service';
 
 
 
-interface City {
+ interface City {
+
   state_id:number;
   city_id: number;
-  city_name: string;
+  cityName: string;
+  tier_1:boolean;
+  
 }
 
 
 interface State{
   state_id : number;
-  name: String;
-
+  state_name: String;
 
 }
 
@@ -47,14 +49,15 @@ export class RegisterComponent  implements OnInit  {
   maxDate = new Date();
   form!: FormGroup;
   isFormValid: boolean = false;
-  states!: any[];
+  
 
 
 
   
-  selectedState!: State;
+  states!: State[];
   cities!: City[];
- 
+ //selectedState!: State;
+  
   
   
 
@@ -94,12 +97,14 @@ export class RegisterComponent  implements OnInit  {
 
   ngOnInit(): void {
     
-    this.lookupService.getStates().subscribe((data: any[]) => {
+    this.lookupService.getStates().subscribe((data: State[]) => {
       this.states = data;
 
 
       
     });
+    
+    
     
 
 
@@ -113,20 +118,11 @@ export class RegisterComponent  implements OnInit  {
 
   
   onStateChange() {
-
-    const id =this.selectedState.state_id
-      this.lookupService.getCities(id).subscribe((data) => {
-      this.cities = data;
-      
-    });
-
     
-   
-
-    
-   
-
-
+    const stateId = this.form.get('state')?.value.id;
+    this.lookupService.getCities(stateId).subscribe((data:City[]) => {
+        this.cities = data;
+      }); 
 
   }
 

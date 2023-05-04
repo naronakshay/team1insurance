@@ -17,15 +17,6 @@ export class DataServiceService {
     return this.email;
   }
 
-
-
-
- 
-
-
-
-
-
   sharedData = {
     RegisterData: {},
     RegisterData2: {},
