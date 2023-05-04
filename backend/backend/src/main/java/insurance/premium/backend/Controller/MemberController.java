@@ -35,18 +35,13 @@ public class MemberController {
 
     @Autowired
     private JwtUtil jwtUtil;
-
-    @Autowired
-    private KieSession session;
     @Autowired
     private MemberService memberService;
 
     @Autowired
-    private MemberRepo memberRepo;
-
-    @Autowired
     private PolicyService policyService;
 
+    //register the new user into the database
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody Member member) {
         try {
@@ -59,7 +54,6 @@ public class MemberController {
 
 
     //return the details of the user by email
-
     @GetMapping("/user/{email}")
     public ResponseEntity<?> getUserByEmail(@PathVariable String email) {
         try {

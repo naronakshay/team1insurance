@@ -8,6 +8,8 @@ import insurance.premium.backend.Repo.MemberRepo;
 import insurance.premium.backend.Service.MemberService;
 import insurance.premium.backend.Service.PolicyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -32,24 +34,33 @@ public class PremiumController {
     // get the different plans that are available for a person based on the calculated premium
     @GetMapping("/premiums/{email}")
     public List<Plan> getPlanDetails(@PathVariable String email) {
-        Member member = memberService.getMemberByEmail(email);
-        List<Plan> plans = new ArrayList<>();
-        Policy policy = policyService.calculatePremium(member);
-        double premium = policy.getPremium();
-        plans = policyService.calculatePlans(premium);
-        return plans;
-
-
+        try {
+            Member member = memberService.getMemberByEmail(email);
+            List<Plan> plans = new ArrayList<>();
+            Policy policy = policyService.calculatePremium(member);
+            double premium = policy.getPremium();
+            plans = policyService.calculatePlans(premium);
+            return plans;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<Plan>();
+        }
     }
+
 
 
     // get the premium amount for a user
     @GetMapping("/premium/{email}")
-    public Policy getPremium(@PathVariable String email) {
-        Member member = memberService.getMemberByEmail(email);
-        Policy policy = policyService.calculatePremium(member);
-        return policy;
+    public ResponseEntity<?> getPremium(@PathVariable String email) {
+        try {
+            Member member = memberService.getMemberByEmail(email);
+            Policy policy = policyService.calculatePremium(member);
+            return ResponseEntity.ok(policy);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to calculate premium for member with email: " + email);
+        }
     }
+
 
 
 

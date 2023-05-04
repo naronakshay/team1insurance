@@ -1,14 +1,42 @@
 package insurance.premium.backend.Entity;
 
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "plans")
 public class Plan {
-
+    @Id
+    @Column(name = "plan_id")
     int plan_id;
-    String plan_type;
+    @Column(name = "plan_type")
+    String planType;
+    @Column(name = "coverage")
     int coverage;
 
+    @Column(name = "plan_details")
     String plan_details;
+
+    @Column(name = "additional_premium")
+    Double additional_premium;
+
+    @Column(name ="cashless_hospitals")
+    int cashless_hospitals;
+
+    public int getPlan_id() {
+        return plan_id;
+    }
+
+    public Double getAdditional_premium() {
+        return additional_premium;
+    }
+
+    public void setAdditional_premium(Double additional_premium) {
+        this.additional_premium = additional_premium;
+    }
+
+    @Transient
     double finalPremium;
+    @Transient
     int monthlyPremium;
 
     public int getMonthlyPremium() {
@@ -19,7 +47,14 @@ public class Plan {
         this.monthlyPremium = monthlyPremium;
     }
 
-    int cashless_hospitals;
+    public Plan(int plan_id, String planType, int coverage, String plan_details, Double additional_premium, int cashless_hospitals) {
+        this.plan_id = plan_id;
+        this.planType = planType;
+        this.coverage = coverage;
+        this.plan_details = plan_details;
+        this.additional_premium = additional_premium;
+        this.cashless_hospitals = cashless_hospitals;
+    }
 
     public String getPlan_details() {
         return plan_details;
@@ -37,19 +72,20 @@ public class Plan {
         this.cashless_hospitals = cashless_hospitals;
     }
 
-
-
+    public Plan() {
+    }
 
     public void setPlan_id(int plan_id) {
         this.plan_id = plan_id;
     }
 
-    public String getPlan_type() {
-        return plan_type;
+
+    public String getPlanType() {
+        return planType;
     }
 
-    public void setPlan_type(String plan_type) {
-        this.plan_type = plan_type;
+    public void setPlanType(String planType) {
+        this.planType = planType;
     }
 
     public int getCoverage() {
@@ -68,3 +104,7 @@ public class Plan {
         this.finalPremium = finalPremium;
     }
 }
+
+
+
+
