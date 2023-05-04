@@ -7,7 +7,7 @@ import { LookupService } from '../lookup.service';
 
 interface Disease{
   disease_id:number;
-  disease_name:string;
+  diseaseName:string;
 
 }
 
@@ -54,6 +54,7 @@ export class Register2Component {
     
     this.lookupService.getDisease().subscribe((data: any[]) => {
       this.disease = data
+      //console.log(this.disease);
 
       this.disease.forEach(disease => {
         disease.selected = false;
@@ -66,10 +67,10 @@ export class Register2Component {
   onDiseaseSelectionChange() {
 
     this.disease.forEach(disease => {
-      if (disease.selected && !this.selectedDiseases.includes(disease.disease_name)) {
-        this.selectedDiseases.push(disease.disease_name);
-      } else if (!disease.selected && this.selectedDiseases.includes(disease.disease_name)) {
-        this.selectedDiseases.splice(this.selectedDiseases.indexOf(disease.disease_name), 1);
+      if (disease.selected && !this.selectedDiseases.includes(disease.diseaseName)) {
+        this.selectedDiseases.push(disease.diseaseName);
+      } else if (!disease.selected && this.selectedDiseases.includes(disease.diseaseName)) {
+        this.selectedDiseases.splice(this.selectedDiseases.indexOf(disease.diseaseName), 1);
       }
     });
 

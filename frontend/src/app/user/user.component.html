@@ -1,74 +1,49 @@
 <app-navbar app-navbar [showButton2]="true" [disableLink]="true"></app-navbar>
 
+<div class="card" style="background-color: transparent;border: transparent;">
+  <div class="card-body">
+    <h1 class="card-title" style="text-align: center;">Welcome {{name}}!</h1>
+    <p class="card-text"></p>
 
-  <div class="card" style="background-color: transparent;border: transparent;">
-      <div class="card-body">
-        <h1 class="card-title" style="text-align: center;">Welcome {{name}}!</h1>
-        <p class="card-text"></p>
-  <section style="width:80rem;">
-    <div class="container py-5">
+    <section class="container-fluid py-5 ">
       <div class="row justify-content-center mb-3">
-        <div class="col-md-12 col-xl-10" *ngFor="let plan of plans">
-
-          <div class="card shadow-0 border rounded-3 mb-3">
-
+        <div class="col-md-12 col-xl-10  " *ngFor="let plan of plans">
+          <div class="card shadow-0 border rounded-3 mb-3 " >
             <div class="card-body">
               <div class="row">
-                <div class="col-md-6 col-lg-6 col-xl-4 ">
+                <div class="col-md-6 col-lg-6 col-xl-4">
                   <div class="bg-image hover-zoom ripple rounded ripple-surface">
-
-
-                    <h2 style="text-align: center;font-weight: bold;">{{plan.plan_type}}</h2>
-                    <div class="mt-1 mb-0 text-muted small" style="text-align: center;">
-       <span class="text-primary"> • </span>
-                      <span>{{plan.plan_details.split(",")[0] || ""}}</span> <br/>
-                      <span class="text-primary"> • </span>
-                      <span>{{plan.plan_details.split(",")[1] || ""}}</span> <br/>
-                      <span class="text-primary"> • </span>
-                      <span>{{plan.plan_details.split(",")[2] || ""}}<br /></span>
+                    <h2 class="text-center font-weight-bold">{{plan.plan_type}}</h2>
+                    <div class="mt-1 mb-0 text-muted small text-center">
+                      <span class="text-primary">•</span>
+                      <span>{{plan.plan_details.split(",")[0] || ""}}</span><br>
+                      <span class="text-primary">•</span>
+                      <span>{{plan.plan_details.split(",")[1] || ""}}</span><br>
+                      <span class="text-primary">•</span>
+                      <span>{{plan.plan_details.split(",")[2] || ""}}</span><br>
                     </div>
-
-
                   </div>
                 </div>
-                
                 <div class="col-md-12 col-lg-1 col-xl-4 mb-2 mb-lg-0 border-sm-start-none border-start">
-                  
-                  
-                  
-                  
-                  <h3 style="text-align: center;color:gray">Cover Amount</h3>
-                  <h2 style="font-weight: bold;text-align: center;">₹{{plan.coverage}} Lakhs</h2>
-                  
+                  <h3 class="text-center text-gray">Cover Amount</h3>
+                  <h2 class="text-center font-weight-bold">₹{{plan.coverage}} Lakhs</h2>
                 </div>
-                <div class="col-md-5 col-lg-1 col-xl-4 mb-2 mb-lg-0 ">
+                <div class="col-md-5 col-lg-1 col-xl-4 mb-2 mb-lg-0">
                   <div>
-                    <h3 style="color:gray;text-align: center;">Cashless Hospitals</h3>
-                    
-                  <h2 style="font-weight: bold;text-align: center;">{{plan.cashless_hospitals}}</h2>
-                  </div> 
-                   
-                  
+                    <h3 class="text-center text-gray">Cashless Hospitals</h3>
+                    <h2 class="text-center font-weight-bold">{{plan.cashless_hospitals}}</h2>
+                  </div>
                 </div>
               </div>
-              <div style="margin-left: 550px;">
-
-                <button class="btn btn-primary btn-sm" type="button" (click)="selectedPlan = plan"(click)="onButtonClicked(plan)"
-                [disabled]="selectedPlan && selectedPlan !== plan">₹{{plan.monthlyPremium}}/month</button>
-                
-
-                <h6 class="text-success">*₹{{plan.finalPremium}} annually</h6>
-                
+              <div class="d-flex justify-content-center align-items-center mt-3">
+                <button class="btn btn-primary btn-sm mr-2" type="button" (click)="selectedPlan = plan"(click)="onButtonClicked(plan)"
+                [disabled]="selectedPlan && selectedPlan !== plan" style="margin-left: 420px;">₹{{plan.monthlyPremium}}/month</button>
               </div>
-            </div>
+              <h6 class="text-success" style="margin-left: 600px;">*₹{{plan.finalPremium}} annually</h6>
             </div>
           </div>
-        
+        </div>
       </div>
-      
-    </div>
-  </section> 
- 
+    </section>
+  </div>
 </div>
-<br/>
-</div> 
