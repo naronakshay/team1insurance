@@ -5,7 +5,12 @@ import insurance.premium.backend.Exceptions.MemberNotFoundException;
 import insurance.premium.backend.Exceptions.MemberRegistrationException;
 import insurance.premium.backend.Service.MemberService;
 import insurance.premium.backend.security.JwtUtil;
+
 import io.jsonwebtoken.JwtException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +30,7 @@ public class MemberController {
     @Autowired
     private JwtUtil jwtUtil;
 
+    Logger memberLogger = LoggerFactory.getLogger(MemberController.class);
 
 
 
@@ -35,6 +41,7 @@ public class MemberController {
             Member registeredMember = memberService.registerMember(member);
             return new ResponseEntity<>(registeredMember, HttpStatus.CREATED);
         } catch (MemberRegistrationException ex) {
+            memberLogger.error("Registration unsuccessful",ex);
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -54,12 +61,19 @@ public class MemberController {
             Member member = memberService.getMemberByEmail(email);
             System.out.println(member);
             return new ResponseEntity<>(member, HttpStatus.OK);
+
         }
         catch (JwtException ex) {
             return new ResponseEntity<>("Invalid token", HttpStatus.UNAUTHORIZED);
+            memberLogger.error("Invalid Token");
         }catch (MemberNotFoundException ex) {
-            return new ResponseEntity<>("Member not found for email: " + email, HttpStatus.NOT_FOUND);
+
+        } catch (MemberNotFoundException ex) {
+            memberLogger.error("Member not found : "+email,ex);
+
+            
         } catch (Exception ex) {
+            memberLogger.error("Member not found : "+email,ex);
             return new ResponseEntity<>("An error occurred while fetching member details", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -76,8 +90,10 @@ public class MemberController {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
             }
         } catch (MemberNotFoundException e) {
+            memberLogger.error("Member not found : "+loginRequest.getEmail(),e);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid email or password");
         } catch (Exception e) {
+            memberLogger.error("Member not found : "+loginRequest.getEmail(),e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
         }
     }
