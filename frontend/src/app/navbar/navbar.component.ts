@@ -25,7 +25,7 @@ export class NavbarComponent {
   }
 
   moveTo2(){
-    this.logout.logout;
+    this.logout.logout();
     this.router.navigate(['login']);
   }
 

@@ -36,15 +36,25 @@ export class SendDataService {
   }
 
 
-  logout() {
-      
+  logout() {   
       localStorage.clear();
   }
 
-  getMemberByEmail(email: string | null): Observable<any> {
-    return this.http.get(`${this.baseUrl}/user/${email}`);
+  getMemberByEmail(email: string|null): Observable<any> {
+   
+
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get(`${this.baseUrl}/user/${email}`, { headers });
+    
   }
- 
+  
+  
+  
+  
+  
+  
+  
 
  
   

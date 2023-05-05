@@ -43,13 +43,8 @@ export class LoginComponent {
           localStorage.setItem('token', token);
           const decodedToken = jwtDecode<any>(token);
           const email = decodedToken.sub;
-          localStorage.setItem('email',email);
-         
-          
-        
-          
+          localStorage.setItem('email',email);  
           this.router.navigate(['/user'])
-        
           console.log(token)
         },
         (error) => {
