@@ -4,6 +4,7 @@ import { SendDataService } from '../member-service';
 import jwtDecode from 'jwt-decode';
 import { Plan } from '../Entity/plan';
 import { PremiumServiceService } from '../premium-service.service';
+import { HttpHeaders } from '@angular/common/http';
 
 
 
@@ -39,9 +40,13 @@ export class UserComponent  implements OnInit  {
 
 ngOnInit(): void {
 
+  
+
 
     const email = localStorage.getItem('email'); 
-    const details = localStorage.getItem('details'); 
+    const details = localStorage.getItem('details');
+    const token = localStorage.getItem('token'); 
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
 
     if (details && JSON.parse(details).email === email) { 
@@ -50,6 +55,7 @@ ngOnInit(): void {
     } else {
       this.userService.getMemberByEmail(email).subscribe(
         (data) => {
+          console.log(data);
           this.userDetails = data;
           localStorage.setItem('name',this.userDetails.firstName.toUpperCase());
           this.name = localStorage.getItem('name');
@@ -60,8 +66,7 @@ ngOnInit(): void {
         }
       );
     }
-    localStorage.removeItem('details');
-
+  
 
     
     this.premiumService.getPlansByEmail(email).subscribe(

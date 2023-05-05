@@ -5,6 +5,7 @@ import insurance.premium.backend.Exceptions.MemberNotFoundException;
 import insurance.premium.backend.Exceptions.MemberRegistrationException;
 import insurance.premium.backend.Service.MemberService;
 import insurance.premium.backend.security.JwtUtil;
+import io.jsonwebtoken.JwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,8 @@ public class MemberController {
 
     @Autowired
     private MemberService memberService;
+    @Autowired
+    private JwtUtil jwtUtil;
 
 
 
@@ -37,13 +40,24 @@ public class MemberController {
     }
 
 
+
     //return the details of the user by email
     @GetMapping("/user/{email}")
-    public ResponseEntity<?> getUserByEmail(@PathVariable String email) {
+    public ResponseEntity<?> getUserByEmail(@PathVariable String email, @RequestHeader("Authorization") String authHeader) {
         try {
+
+            String token = authHeader.substring(7);
+            String decodedEmail = jwtUtil.getEmailFromToken(token);
+            if (!decodedEmail.equals(email)) {
+                return new ResponseEntity<>("Unauthorized access", HttpStatus.UNAUTHORIZED);
+            }
             Member member = memberService.getMemberByEmail(email);
+            System.out.println(member);
             return new ResponseEntity<>(member, HttpStatus.OK);
-        } catch (MemberNotFoundException ex) {
+        }
+        catch (JwtException ex) {
+            return new ResponseEntity<>("Invalid token", HttpStatus.UNAUTHORIZED);
+        }catch (MemberNotFoundException ex) {
             return new ResponseEntity<>("Member not found for email: " + email, HttpStatus.NOT_FOUND);
         } catch (Exception ex) {
             return new ResponseEntity<>("An error occurred while fetching member details", HttpStatus.INTERNAL_SERVER_ERROR);

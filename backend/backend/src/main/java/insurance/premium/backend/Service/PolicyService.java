@@ -118,7 +118,7 @@ public class PolicyService {
     }
 
 
-    
+
     // calculate the additional premium for each type  of plans according to plan type
     public double calculateAdditionalPremium(String planType) {
 

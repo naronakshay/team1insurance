@@ -6,8 +6,6 @@ import insurance.premium.backend.Repo.MemberRepo;
 import insurance.premium.backend.Service.MemberService;
 import insurance.premium.backend.Service.PolicyService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,17 +44,6 @@ public class PremiumController {
 
 
 
-    // get the premium amount for a user
-    @GetMapping("/premium/{email}")
-    public ResponseEntity<?> getPremium(@PathVariable String email) {
-        try {
-            Member member = memberService.getMemberByEmail(email);
-            Policy policy = policyService.calculatePremium(member);
-            return ResponseEntity.ok(policy);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to calculate premium for member with email: " + email);
-        }
-    }
 
 
 
