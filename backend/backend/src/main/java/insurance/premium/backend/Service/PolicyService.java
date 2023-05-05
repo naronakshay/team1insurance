@@ -6,7 +6,6 @@ import insurance.premium.backend.Entity.Member;
 import insurance.premium.backend.Entity.Plan;
 import insurance.premium.backend.Entity.Policy;
 import insurance.premium.backend.Repo.DiseaseRepo;
-import insurance.premium.backend.Repo.MemberRepo;
 import insurance.premium.backend.Repo.PlansRepo;
 import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -119,6 +118,7 @@ public class PolicyService {
     }
 
 
+    
     // calculate the additional premium for each type  of plans according to plan type
     public double calculateAdditionalPremium(String planType) {
 
@@ -134,6 +134,7 @@ public class PolicyService {
         }
         return additionalPremium;
     }
+
 
 
     // Return the  types of plans that can be provied to  users based on calculated premium

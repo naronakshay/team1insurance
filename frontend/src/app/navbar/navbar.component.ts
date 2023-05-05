@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 import { Router } from '@angular/router';
-import { SendDataService } from '../send-data.service';
+import { SendDataService } from '../member-service';
 
 @Component({
   selector: 'app-navbar',

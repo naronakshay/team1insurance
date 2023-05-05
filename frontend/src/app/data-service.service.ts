@@ -1,38 +1,31 @@
 import { Injectable } from '@angular/core';
+import { Password } from './Entity/passwordData';
+import { Register2Data } from './Entity/register2Data';
+import { RegisterData } from './Entity/registerData';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataServiceService {
 
-  constructor() { }
-
-
-  private email!:string;
-  setEmail(email:string){
-    this.email=email;
-  }
-
-  getEmail(){
-    return this.email;
-  }
+  constructor() { } 
 
   sharedData = {
-    RegisterData: {},
-    RegisterData2: {},
-    PasswordData: {}
+    Data1: {},
+    Data2: {},
+    Data3: {}
   };
 
-  setRegisterData(data: any) {
-    this.sharedData.RegisterData = data;
+  setRegisterData(data: RegisterData) {
+    this.sharedData.Data1 = data;
   }
 
-  setRegisterData2(data: any) {
-    this.sharedData.RegisterData2 = data;
+  setRegisterData2(data: Register2Data) {
+    this.sharedData.Data2 = data;
   }
 
-  setPasswordData(data: any) {
-    this.sharedData.PasswordData = data;
+  setPasswordData(data: Password) {
+    this.sharedData.Data3 = data;
   }
 
   getSharedData() {
