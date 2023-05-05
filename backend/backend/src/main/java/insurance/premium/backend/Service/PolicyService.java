@@ -8,6 +8,8 @@ import insurance.premium.backend.Entity.Policy;
 import insurance.premium.backend.Repo.DiseaseRepo;
 import insurance.premium.backend.Repo.PlansRepo;
 import org.kie.api.runtime.KieSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
@@ -32,8 +34,11 @@ public class PolicyService {
     @Autowired
     private CityRepo cityRepo;
 
+    Logger policyServiceLogger = LoggerFactory.getLogger(PolicyService.class);
+
+
     //calculate age of a person from the date of birth
-    public static int calculateAge(Date dateOfBirth) throws IllegalArgumentException {
+    public  int calculateAge(Date dateOfBirth) throws IllegalArgumentException {
         try {
             Calendar dob = Calendar.getInstance();
             dob.setTime(dateOfBirth);
@@ -46,7 +51,10 @@ public class PolicyService {
             }
             return age;
         } catch (Exception e) {
+            policyServiceLogger.error("Invalid date of birth", e);
             throw new IllegalArgumentException("Invalid date of birth", e);
+
+
         }
     }
 
@@ -73,7 +81,11 @@ public class PolicyService {
                 diseasePremium = disease.getAdditional_premium();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            policyServiceLogger.error("An error occurred while retrieving disease premium",e);
+
+
+
         }
         return diseasePremium;
     }
@@ -88,7 +100,8 @@ public class PolicyService {
                 double premium = diseasePremium(illnessArray[i].trim());
                 illnessPremium += premium;
             } catch (Exception e) {
-                e.printStackTrace();
+                //e.printStackTrace();
+                policyServiceLogger.error("An error occurred while calculating illness premium",e);
                 return 0.0;
             }
         }
@@ -111,7 +124,8 @@ public class PolicyService {
             session.insert(p);
             session.fireAllRules();
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            policyServiceLogger.error("An error occurred while firing rules for policy object",e);
         }
         //return the object after calculating the premium
         return p;
@@ -130,7 +144,8 @@ public class PolicyService {
                 additionalPremium = plan.getAdditional_premium();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            policyServiceLogger.error("An error occurred while retrieving additional premium",e);
         }
         return additionalPremium;
     }
@@ -152,8 +167,10 @@ public class PolicyService {
                 plan.setMonthlyPremium((int) plan.getFinalPremium() / 12);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+           // e.printStackTrace();
             plans = new ArrayList<>();
+            policyServiceLogger.error("An error occurred while calculating plans",e);
+
         }
         return plans;
     }

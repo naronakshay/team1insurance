@@ -4,6 +4,8 @@ import insurance.premium.backend.Entity.Member;
 import insurance.premium.backend.Exceptions.MemberNotFoundException;
 import insurance.premium.backend.Exceptions.MemberRegistrationException;
 import insurance.premium.backend.Repo.MemberRepo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -13,6 +15,8 @@ import org.springframework.stereotype.Service;
 public class MemberServiceImpl implements MemberService {
     @Autowired
     private MemberRepo memberRepo;
+
+    Logger memberServicelogger = LoggerFactory.getLogger(MemberServiceImpl.class);
 
     // save the details of the member into the member table
     public Member registerMember(Member member) throws MemberRegistrationException {
@@ -30,10 +34,13 @@ public class MemberServiceImpl implements MemberService {
             return memberRepo.save(member);
         } catch (DataIntegrityViolationException ex) {
             if (ex.getMessage().contains("email")) {
+                memberServicelogger.error("Email address already exists",ex);
                 throw new MemberRegistrationException("Email address already exists", ex);
             } else if (ex.getMessage().contains("gov_id")) {
+                memberServicelogger.error("Government ID already exists",ex);
                 throw new MemberRegistrationException("Government ID already exists", ex);
             } else {
+                memberServicelogger.error("An error occurred while registering the member",ex);
                 throw new MemberRegistrationException("An error occurred while registering the member", ex);
             }
         }
@@ -44,6 +51,7 @@ public class MemberServiceImpl implements MemberService {
     public Member getMemberByEmail (String email){
         Member member = memberRepo.findByEmail(email);
         if (member == null) {
+            memberServicelogger.error("Member not found for email:"+email);
             throw new MemberNotFoundException("Member not found for email: " + email);
         }
         return member;
@@ -59,6 +67,7 @@ public class MemberServiceImpl implements MemberService {
         BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
         Member member = memberRepo.findByEmail(email);
         if (member == null) {
+            memberServicelogger.error("Member with email " + email + " not found");
             throw new MemberNotFoundException("Member with email " + email + " not found");
         }
 
