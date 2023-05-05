@@ -1,4 +1,4 @@
-package insurance.premium.backend.security;
+package insurance.premium.backend.Security;
 
 import io.jsonwebtoken.*;
 

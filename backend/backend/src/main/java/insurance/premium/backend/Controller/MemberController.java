@@ -4,7 +4,7 @@ import insurance.premium.backend.Entity.Member;
 import insurance.premium.backend.Exceptions.MemberNotFoundException;
 import insurance.premium.backend.Exceptions.MemberRegistrationException;
 import insurance.premium.backend.Service.MemberService;
-import insurance.premium.backend.security.JwtUtil;
+import insurance.premium.backend.Security.JwtUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

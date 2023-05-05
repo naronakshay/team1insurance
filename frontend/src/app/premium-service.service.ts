@@ -8,7 +8,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class PremiumServiceService {
 
 
-  private plansUrl = 'http://localhost:8080/api/v1/member/premiums';
+  private baseUrl = 'http://localhost:8080/api/v1/member';
 
 
   private currentUserSubject!: BehaviorSubject<any>;
@@ -18,7 +18,7 @@ export class PremiumServiceService {
   constructor(private http: HttpClient) { }
 
   getPlansByEmail(email:string | null):Observable<any>{
-    return this.http.get(`${this.plansUrl}/${email}`);
+    return this.http.get(`${this.baseUrl}/premiums/${email}`);
 
   }
 }

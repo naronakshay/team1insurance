@@ -12,7 +12,7 @@ export class SendDataService {
 
  
 
-  private currentUserSubject!: BehaviorSubject<any>;
+  
   public currentUser!: Observable<any>;
 
   constructor(private http: HttpClient) {}
