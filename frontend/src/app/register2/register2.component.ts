@@ -3,17 +3,12 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { StateKey } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { DataServiceService } from '../data-service.service';
+import { Disease } from '../Entity/disease';
+import { Register2Data } from '../Entity/register2Data';
 import { LookupService } from '../lookup.service';
 
-interface Disease{
-  disease_id:number;
-  diseaseName:string;
 
-}
 
-interface DiseaseMap {
-  [diseaseName: string]: boolean;
-}
 
 @Component({
   selector: 'app-register2',
@@ -41,9 +36,8 @@ export class Register2Component implements OnInit {
 
   ngOnInit(): void {
     
-    this.lookupService.getDisease().subscribe((data: any[]) => {
+    this.lookupService.getDisease().subscribe((data: Disease[]) => {
       this.disease = data
-      //console.log(this.disease);
 
       this.disease.forEach(disease => {
         disease.selected = false;
@@ -81,8 +75,7 @@ export class Register2Component implements OnInit {
     
     this.illnessDetails=this.selectedDiseases.join(', ');
 
-
-    const formData = {
+    const formData:Register2Data = {
       tobaccoUser: this.selectedOption,
       illnessDetails:this.illnessDetails
       

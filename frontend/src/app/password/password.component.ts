@@ -4,7 +4,7 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DataServiceService } from '../data-service.service';
-import { SendDataService } from '../send-data.service';
+import { SendDataService } from '../member-service';
 
 
 @Component({
@@ -59,18 +59,14 @@ export class PasswordComponent {
       if(this.form.valid)
       {
         const passwordData = this.form.value;
-        
-      
         const passwordData1 = {
-          
           password: passwordData.password,
           
         };
 
         this.dataService.setPasswordData(passwordData1);
-
         const sharedData = this.dataService.getSharedData();
-        const mergedData = Object.assign({}, sharedData.PasswordData, sharedData.RegisterData, sharedData.RegisterData2);
+        const mergedData = Object.assign({}, sharedData.Data3, sharedData.Data1, sharedData.Data2);
         console.log(mergedData);
         this.sendDataService.register(mergedData).subscribe(
           (data) => {

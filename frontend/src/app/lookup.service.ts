@@ -1,29 +1,9 @@
 import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
-interface State{
-  state_id : number;
-  state_name: String;
-
-}
-
-interface City {
-
-  state_id:number;
-  city_id: number;
-  cityName: string;
-  tier_1:boolean;
-  
-}
-
-interface Disease{
-  disease_id:number;
-  disease_name:string;
-
-}
-
-
+import { State } from './Entity/state';
+import { City } from './Entity/city';
+import { Disease } from './Entity/disease';
 
 
 

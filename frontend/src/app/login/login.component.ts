@@ -5,7 +5,7 @@ import { DataServiceService } from '../data-service.service';
 import jwtDecode from 'jwt-decode';
 
 
-import { SendDataService } from '../send-data.service';
+import { SendDataService } from '../member-service';
 
 @Component({
   selector: 'app-login',
@@ -48,7 +48,7 @@ export class LoginComponent {
           
         
           
-          this.router.navigate(['user'])
+          this.router.navigate(['/user'])
         
           console.log(token)
         },
