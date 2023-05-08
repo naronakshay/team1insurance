@@ -5,12 +5,9 @@ import insurance.premium.backend.Exceptions.MemberNotFoundException;
 import insurance.premium.backend.Exceptions.MemberRegistrationException;
 import insurance.premium.backend.Service.MemberService;
 import insurance.premium.backend.security.JwtUtil;
-
 import io.jsonwebtoken.JwtException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +30,6 @@ public class MemberController {
     Logger memberLogger = LoggerFactory.getLogger(MemberController.class);
 
 
-
     //register the new user into the database
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody Member member) {
@@ -41,11 +37,10 @@ public class MemberController {
             Member registeredMember = memberService.registerMember(member);
             return new ResponseEntity<>(registeredMember, HttpStatus.CREATED);
         } catch (MemberRegistrationException ex) {
-            memberLogger.error("Registration unsuccessful",ex);
+            memberLogger.error("Registration unsuccessful", ex);
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-
 
 
     //return the details of the user by email
@@ -56,26 +51,21 @@ public class MemberController {
             String token = authHeader.substring(7);
             String decodedEmail = jwtUtil.getEmailFromToken(token);
             if (!decodedEmail.equals(email)) {
-                return new ResponseEntity<>("Unauthorized access", HttpStatus.UNAUTHORIZED);
+                throw new IllegalArgumentException("Unauthorized access");
             }
             Member member = memberService.getMemberByEmail(email);
-            System.out.println(member);
             return new ResponseEntity<>(member, HttpStatus.OK);
 
-        }
-        catch (JwtException ex) {
-            return new ResponseEntity<>("Invalid token", HttpStatus.UNAUTHORIZED);
-            memberLogger.error("Invalid Token");
-        }catch (MemberNotFoundException ex) {
+        } catch (JwtException ex) {
+            memberLogger.error(("Invalid Statement"));
 
         } catch (MemberNotFoundException ex) {
-            memberLogger.error("Member not found : "+email,ex);
+            memberLogger.error("Member not found : " + email, ex);
 
-            
-        } catch (Exception ex) {
-            memberLogger.error("Member not found : "+email,ex);
-            return new ResponseEntity<>("An error occurred while fetching member details", HttpStatus.INTERNAL_SERVER_ERROR);
+
         }
+        return new ResponseEntity<>("An error occurred while fetching member details", HttpStatus.INTERNAL_SERVER_ERROR);
+
     }
 
 

@@ -41,6 +41,7 @@ export class UserComponent  implements OnInit  {
 ngOnInit(): void {
 
   
+ 
 
 
     const email = localStorage.getItem('email'); 
