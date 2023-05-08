@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
@@ -18,7 +18,10 @@ export class PremiumServiceService {
   constructor(private http: HttpClient) { }
 
   getPlansByEmail(email:string | null):Observable<any>{
-    return this.http.get(`${this.plansUrl}/${email}`);
+
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get(`${this.plansUrl}/${email}`,{ headers });
 
   }
 }
