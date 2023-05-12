@@ -1,23 +1,19 @@
 package insurance.premium.backend.Service;
-
+import insurance.premium.backend.Entity.*;
+import insurance.premium.backend.Repo.CityRepo;
 import insurance.premium.backend.Entity.Disease;
 import insurance.premium.backend.Entity.Member;
 import insurance.premium.backend.Entity.Plan;
 import insurance.premium.backend.Entity.Policy;
 import insurance.premium.backend.Repo.DiseaseRepo;
-import insurance.premium.backend.Repo.MemberRepo;
 import insurance.premium.backend.Repo.PlansRepo;
 import org.kie.api.runtime.KieSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.sql.*;
-
 import java.util.ArrayList;
 import java.util.Calendar;
-
-import java.util.*;
-
 import java.util.Date;
 import java.util.List;
 
@@ -28,22 +24,21 @@ public class PolicyService {
     private KieSession session;
 
     @Autowired
-    private MemberRepo memberRepo;
-
-    @Autowired
     private PlansRepo plansRepo;
+
 
     @Autowired
     private DiseaseRepo diseaseRepo;
 
-    public PolicyService(DiseaseRepo diseaseRepo) {
-        this.diseaseRepo = diseaseRepo;
-    }
 
+    @Autowired
+    private CityRepo cityRepo;
+
+    Logger policyServiceLogger = LoggerFactory.getLogger(PolicyService.class);
 
 
     //calculate age of a person from the date of birth
-    public static int calculateAge(Date dateOfBirth) throws IllegalArgumentException {
+    public  int calculateAge(Date dateOfBirth) throws IllegalArgumentException {
         try {
             Calendar dob = Calendar.getInstance();
             dob.setTime(dateOfBirth);
@@ -56,77 +51,57 @@ public class PolicyService {
             }
             return age;
         } catch (Exception e) {
+            policyServiceLogger.error("Invalid date of birth", e);
             throw new IllegalArgumentException("Invalid date of birth", e);
+
+
         }
     }
+
+
+
+
+
 
 
     // to check whether a user belong to tier_1 city or not
-    public static boolean isTier1City(String city_name) {
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        boolean isTier1City = false;
-        try {
+    public boolean isTier1City(String city_name) {
 
-
-
-            // Establish a connection to the MySQL database
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/lookup","root","");
-            stmt = conn.prepareStatement("SELECT tier1_city FROM city WHERE city_name = ?");
-
-            stmt.setString(1, city_name);
-            //execute the query and stores the result in rs
-            rs = stmt.executeQuery();
-            if (rs.next()) {
-
-                isTier1City = rs.getBoolean("tier1_city");
-
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (rs != null) rs.close();
-                if (stmt != null) stmt.close();
-                if (conn != null) conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return isTier1City;
+        City city = cityRepo.findByCityName(city_name);
+        return city.isTier_1();
     }
 
 
-
     //calculate the additional amount a user need to pay extra for pre-existing illness one by one
-    public  double diseasePremium(String disease_name) {
-        double diseasePremium=0.0;
+    public double diseasePremium(String disease_name) {
+        double diseasePremium = 0.0;
         Disease disease = diseaseRepo.findByDiseaseName(disease_name);
         try {
             if (disease != null) {
                 diseasePremium = disease.getAdditional_premium();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            policyServiceLogger.error("An error occurred while retrieving disease premium",e);
+
+
+
         }
         return diseasePremium;
     }
-
-
-
 
 
     //calculate and return the additional premium for  user for all disease
     public double illnessCheck(String illnessDetails) {
         Double illnessPremium = 0.0;
         String[] illnessArray = illnessDetails.split(",");
-        for (int i = 0; i < illnessArray.length; i++){
+        for (int i = 0; i < illnessArray.length; i++) {
             try {
-                double premium=diseasePremium(illnessArray[i].trim());
-                illnessPremium+=premium;
+                double premium = diseasePremium(illnessArray[i].trim());
+                illnessPremium += premium;
             } catch (Exception e) {
-                e.printStackTrace();
+                //e.printStackTrace();
+                policyServiceLogger.error("An error occurred while calculating illness premium",e);
                 return 0.0;
             }
         }
@@ -134,17 +109,13 @@ public class PolicyService {
     }
 
 
-
-
-
-
     //calculate the basic premium amount for a person
     public Policy calculatePremium(Member member) {
 
-        Policy p=new Policy();
+        Policy p = new Policy();
         //sets the required variables to calculate premium for a user in policy
         try {
-            p.setIstobaccoUser(member.getTobaccoUser());
+            p.setIstobaccoUser(member.getIsTobaccoUser());
             p.setGender(member.getGender());
             p.setAge(calculateAge(member.getDob()));
             p.setIstier1City(isTier1City(member.getCity()));
@@ -152,9 +123,9 @@ public class PolicyService {
             //insert object p into session and fire the rules in the drl file
             session.insert(p);
             session.fireAllRules();
-        }
-        catch(Exception e){
-            e.printStackTrace();
+        } catch (Exception e) {
+            //e.printStackTrace();
+            policyServiceLogger.error("An error occurred while firing rules for policy object",e);
         }
         //return the object after calculating the premium
         return p;
@@ -162,12 +133,8 @@ public class PolicyService {
 
 
 
- 
-
-
-
     // calculate the additional premium for each type  of plans according to plan type
-    public double calculateAdditionalPremium(String planType, double basicPremium){
+    public double calculateAdditionalPremium(String planType) {
 
         double additionalPremium = 0;
 
@@ -176,20 +143,17 @@ public class PolicyService {
             if (plan != null) {
                 additionalPremium = plan.getAdditional_premium();
             }
-        } catch (Exception  e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            //e.printStackTrace();
+            policyServiceLogger.error("An error occurred while retrieving additional premium",e);
         }
         return additionalPremium;
     }
 
 
 
-
-
-
-
     // Return the  types of plans that can be provied to  users based on calculated premium
-    public List<Plan> calculatePlans(double premium){
+    public List<Plan> calculatePlans(double premium) {
 
         double basicPremium = premium;
         //create plan list to add all plans in database
@@ -197,18 +161,17 @@ public class PolicyService {
         //take each the plans and calculate and add the final premium for all plans into the plan entity
         try {
             for (Plan plan : plans) {
-                double additionalPremium = calculateAdditionalPremium(plan.getPlanType(), basicPremium);
+                double additionalPremium = calculateAdditionalPremium(plan.getPlanType());
                 double finalPremium = basicPremium + additionalPremium;
                 plan.setFinalPremium(finalPremium);
                 plan.setMonthlyPremium((int) plan.getFinalPremium() / 12);
             }
-        }
-        catch(Exception e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+           // e.printStackTrace();
             plans = new ArrayList<>();
+            policyServiceLogger.error("An error occurred while calculating plans",e);
+
         }
-        return  plans;
+        return plans;
     }
-
 }
-

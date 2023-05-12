@@ -86,7 +86,7 @@
 
         <ng-container *ngFor="let item of disease">
         <div class="border" style="background-color: white;">
-            <mat-checkbox  [(ngModel)]="item.selected" (change)="onDiseaseSelectionChange()" >{{item.disease_name}}</mat-checkbox>
+            <mat-checkbox  [(ngModel)]="item.selected" (change)="onDiseaseSelectionChange()" >{{item.diseaseName}}</mat-checkbox>
         </div>
       </ng-container>
         <br>
