@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SendDataService } from './send-data.service';
+import { SendDataService } from './member-service';
 
 describe('SendDataService', () => {
   let service: SendDataService;

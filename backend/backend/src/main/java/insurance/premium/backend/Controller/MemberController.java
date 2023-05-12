@@ -1,23 +1,21 @@
 package insurance.premium.backend.Controller;
-
 import insurance.premium.backend.Entity.LoginRequest;
 import insurance.premium.backend.Entity.Member;
-import insurance.premium.backend.Entity.Plan;
-import insurance.premium.backend.Entity.Policy;
 import insurance.premium.backend.Exceptions.MemberNotFoundException;
 import insurance.premium.backend.Exceptions.MemberRegistrationException;
-import insurance.premium.backend.Repo.MemberRepo;
 import insurance.premium.backend.Service.MemberService;
-import insurance.premium.backend.Service.PolicyService;
 import insurance.premium.backend.security.JwtUtil;
 
 
 import org.kie.api.runtime.KieSession;
+import io.jsonwebtoken.JwtException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -27,6 +25,7 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -40,10 +39,14 @@ public class MemberController {
     @Autowired
 
     private MemberService memberService;
-
     @Autowired
     
     private PolicyService policyService;
+    private JwtUtil jwtUtil;
+
+    Logger memberLogger = LoggerFactory.getLogger(MemberController.class);
+
+
 
     //register the new user into the database
     @PostMapping("/register")
@@ -52,20 +55,39 @@ public class MemberController {
             Member registeredMember = memberService.registerMember(member);
             return new ResponseEntity<>(registeredMember, HttpStatus.CREATED);
         } catch (MemberRegistrationException ex) {
+            memberLogger.error("Registration unsuccessful",ex);
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
 
+
     //return the details of the user by email
     @GetMapping("/user/{email}")
-    public ResponseEntity<?> getUserByEmail(@PathVariable String email) {
+    public ResponseEntity<?> getUserByEmail(@PathVariable String email, @RequestHeader("Authorization") String authHeader) {
         try {
+
+            String token = authHeader.substring(7);
+            String decodedEmail = jwtUtil.getEmailFromToken(token);
+            if (!decodedEmail.equals(email)) {
+                return new ResponseEntity<>("Unauthorized access", HttpStatus.UNAUTHORIZED);
+            }
             Member member = memberService.getMemberByEmail(email);
+            System.out.println(member);
             return new ResponseEntity<>(member, HttpStatus.OK);
+
+        }
+        catch (JwtException ex) {
+            return new ResponseEntity<>("Invalid token", HttpStatus.UNAUTHORIZED);
+            memberLogger.error("Invalid Token");
+        }catch (MemberNotFoundException ex) {
+
         } catch (MemberNotFoundException ex) {
-            return new ResponseEntity<>("Member not found for email: " + email, HttpStatus.NOT_FOUND);
+            memberLogger.error("Member not found : "+email,ex);
+
+            
         } catch (Exception ex) {
+            memberLogger.error("Member not found : "+email,ex);
             return new ResponseEntity<>("An error occurred while fetching member details", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -82,8 +104,10 @@ public class MemberController {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
             }
         } catch (MemberNotFoundException e) {
+            memberLogger.error("Member not found : "+loginRequest.getEmail(),e);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid email or password");
         } catch (Exception e) {
+            memberLogger.error("Member not found : "+loginRequest.getEmail(),e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
         }
     }

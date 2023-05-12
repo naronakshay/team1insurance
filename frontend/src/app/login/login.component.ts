@@ -5,7 +5,7 @@ import { DataServiceService } from '../data-service.service';
 import jwtDecode from 'jwt-decode';
 
 
-import { SendDataService } from '../send-data.service';
+import { SendDataService } from '../member-service';
 
 @Component({
   selector: 'app-login',
@@ -43,13 +43,8 @@ export class LoginComponent {
           localStorage.setItem('token', token);
           const decodedToken = jwtDecode<any>(token);
           const email = decodedToken.sub;
-          localStorage.setItem('email',email);
-         
-          
-        
-          
-          this.router.navigate(['user'])
-        
+          localStorage.setItem('email',email);  
+          this.router.navigate(['/user'])
           console.log(token)
         },
         (error) => {

@@ -1,168 +1,168 @@
 <body>
-<app-navbar [showButton]="true"></app-navbar>
-<div class="register-page-styling">
-  
-    <h2 style="font-size:25px;font-weight:bold;">Why buy from Us?</h2>
+  <app-navbar [showButton]="true"></app-navbar>
+  <div class="register-page-styling">
     
+      <h2 style="font-size:25px;font-weight:bold;">Why buy from Us?</h2>
+      
+    
+    <ul class="style-content-list">
+      <li style="font-weight: 600;">30 minutes claim support*</li>
+      <li  style="font-weight: 600;">Tax benifits upto Rs 75,000 under Sec. 80D</li>
+      <li style="font-weight: 600;">Instant Purchase</li>
+      <li  style="font-weight: 600;">10,000+ Hospitals for cashless treatment</li>
+    </ul>
   
-  <ul class="style-content-list">
-    <li style="font-weight: 600;">30 minutes claim support*</li>
-    <li  style="font-weight: 600;">Tax benifits upto Rs 75,000 under Sec. 80D</li>
-    <li style="font-weight: 600;">Instant Purchase</li>
-    <li  style="font-weight: 600;">10,000+ Hospitals for cashless treatment</li>
-  </ul>
-
-  <img src='../../assets/insurance-animation-image.webp' class="register-page-image">
-</div>
-<mat-card class="register-card">
+    <img src='../../assets/insurance-animation-image.webp' class="register-page-image">
+  </div>
+  <mat-card class="register-card">
+    
+      <mat-card-title style="text-align: center;font-weight: bolder;">Register Now</mat-card-title>
+      <br/>
+      <mat-card-content style="display: flex; justify-content: center; align-items: center;box-sizing: border-box;">
+      <form [formGroup]="form"  class="register-form" (ngSubmit)="onSubmit()" >
   
-    <mat-card-title style="text-align: center;font-weight: bolder;">Register Now</mat-card-title>
-    <br/>
-    <mat-card-content style="display: flex; justify-content: center; align-items: center;box-sizing: border-box;">
-    <form [formGroup]="form"  class="register-form" (ngSubmit)="onSubmit()" >
-
-
-          <div class="register-container mat-card-white">
+  
+            <div class="register-container mat-card-white">
+              
+              <mat-form-field  appearance="fill">
+                <mat-label>First Name</mat-label>
+                <input matInput formControlName="firstName">
+                <mat-error *ngIf="form.get('firstName')?.hasError('required')"> Required.</mat-error>
+              </mat-form-field>
             
-            <mat-form-field  appearance="fill">
-              <mat-label>First Name</mat-label>
-              <input matInput formControlName="firstName">
-              <mat-error *ngIf="form.get('firstName')?.hasError('required')"> Required.</mat-error>
-            </mat-form-field>
-          
-            <mat-form-field class="rigt-side" appearance="fill">
-              <mat-label>Last Name</mat-label>
-              <input matInput formControlName="lastName">
-              <mat-error *ngIf="form.get('lastName')?.hasError('required')">Required.</mat-error>
-            </mat-form-field>
-          </div>
-
-          <div class="register-container">
-            
-            <mat-form-field appearance="fill">
-                <mat-label>Email</mat-label>
-                <input matInput formControlName="email">
-                <mat-error *ngIf="form.get('email')?.hasError('email')">
-                  Enter a valid Email Address.
-                </mat-error>
-                <mat-error *ngIf="form.get('email')?.hasError('required')">
-                  Required.
-                </mat-error>
-            </mat-form-field>
-          
-            <mat-form-field appearance="fill">
-                <mat-label>Mobile Number</mat-label>
-                <span matPrefix>+91 &nbsp;</span>
-                <input type="tel" matInput  formControlName="mobileNumber">
-                <mat-error *ngIf="form.get('mobileNumber')?.hasError('required')">
+              <mat-form-field class="rigt-side" appearance="fill">
+                <mat-label>Last Name</mat-label>
+                <input matInput formControlName="lastName">
+                <mat-error *ngIf="form.get('lastName')?.hasError('required')">Required.</mat-error>
+              </mat-form-field>
+            </div>
+  
+            <div class="register-container">
+              
+              <mat-form-field appearance="fill">
+                  <mat-label>Email</mat-label>
+                  <input matInput formControlName="email">
+                  <mat-error *ngIf="form.get('email')?.hasError('email')">
+                    Enter a valid Email Address.
+                  </mat-error>
+                  <mat-error *ngIf="form.get('email')?.hasError('required')">
                     Required.
-                </mat-error>
-                <mat-error *ngIf="form.get('mobileNumber')?.hasError('pattern')">
+                  </mat-error>
+              </mat-form-field>
+            
+              <mat-form-field appearance="fill">
+                  <mat-label>Mobile Number</mat-label>
+                  <span matPrefix>+91 &nbsp;</span>
+                  <input type="tel" matInput  formControlName="mobileNumber">
+                  <mat-error *ngIf="form.get('mobileNumber')?.hasError('required')">
+                      Required.
+                  </mat-error>
+                  <mat-error *ngIf="form.get('mobileNumber')?.hasError('pattern')">
+                      Enter a valid Mobile Number.
+                  </mat-error>
+                  <mat-error *ngIf="form.get('mobileNumber')?.hasError('sameDigits')">
                     Enter a valid Mobile Number.
                 </mat-error>
-                <mat-error *ngIf="form.get('mobileNumber')?.hasError('sameDigits')">
-                  Enter a valid Mobile Number.
-              </mat-error>
-
-            </mat-form-field>
-
-
-          </div>
-
-          <div class="register-container">
-           
-
-            
-
-            <mat-form-field appearance="fill" >
-                <mat-label>Gender</mat-label>
-                <mat-select formControlName="gender" >
-                  <mat-option value="M">Male</mat-option>
-                  <mat-option value="F">Female</mat-option>
-                  <mat-option value="O">Others</mat-option>
-                </mat-select>
-                <mat-error *ngIf="form.get('gender')?.hasError('required')">
-                    Required.
-                </mat-error>
-            </mat-form-field>
-
-
-            <mat-form-field class="reduce" appearance="fill">
-                <mat-label>Date of Birth</mat-label>
-                <input matInput [max]="maxDate" [min]="minDate" [matDatepicker]="picker" formControlName="dateOfBirth" required>
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker  #picker></mat-datepicker>
-                <mat-error *ngIf="form.get('dateOfBirth')?.hasError('required')">
-                  Required.
-                </mat-error>
-            </mat-form-field>
-          </div>
-
-
-          
-          <div class="register-container">
-
-            <mat-form-field  appearance="fill">
-              <mat-label>Address</mat-label>
-              <input matInput formControlName="address">
-              <mat-error *ngIf="form.get('address')?.hasError('required')">Required.</mat-error>
-            </mat-form-field>
-          
-            <mat-form-field class="rigt-side" appearance="fill">
-              <mat-label>Aadhar Number</mat-label>
-              <input matInput placeholder="0000-0000-0000" formControlName="govId">
-              <mat-error *ngIf="form.get('govId')?.hasError('required')"> Required.</mat-error>
-              <mat-error *ngIf="form.get('govId')?.hasError('pattern')|| form.get('govId')?.hasError('sameDigits')">Enter a valid Aadhar Number</mat-error>
-            </mat-form-field>
-          </div>
-
-
-
-          <div class="register-container">
-           
-
-
-              <mat-form-field class = "together"appearance="fill" >
-                <mat-label>State</mat-label>
-                <mat-select formControlName="state"    [(ngModel)]="selectedState" (ngModelChange)="onStateChange()" >
-                  <mat-option *ngFor="let item of states" [value]="item">{{ item.state_name }}</mat-option>
-
-                </mat-select>
-                <mat-error *ngIf="form.get('state')?.hasError('required')">
-                   Required.
-                </mat-error>
+  
               </mat-form-field>
-
-              <mat-form-field class = "together"appearance="fill" >
-                <mat-label>City</mat-label>
-                <mat-select formControlName="city" >
-                  <mat-option *ngFor="let item of cities" value={{item.city_name}} >{{item.city_name}}</mat-option>
-                </mat-select>
-                <mat-error *ngIf="form.get('city')?.hasError('required')">
-                     Required.
-                </mat-error>
-              </mat-form-field>
-
-
-           
-              <mat-form-field  class="right-alone" appearance="fill">
-                <mat-label>PIN Code</mat-label>
-                <input matInput formControlName="pincode" >
-                <mat-error *ngIf="form.get('pincode')?.hasError('required')"> Required.</mat-error>
-                <mat-error *ngIf="form.get('pincode')?.hasError('pattern')||form.get('pincode')?.hasError('sameDigits')">Enter a valid PIN Code.</mat-error>
-              </mat-form-field>
-
-            
+  
+  
+            </div>
+  
+            <div class="register-container">
+             
+  
               
-          </div>
-
-          <div>
-            <button class="submit-button" mat-raised-button color="primary" type="submit" >Next</button>
-          </div>    
-
-      </form>
-    </mat-card-content>
-
-</mat-card>
-
-</body>
+  
+              <mat-form-field appearance="fill" >
+                  <mat-label>Gender</mat-label>
+                  <mat-select formControlName="gender" >
+                    <mat-option value="M">Male</mat-option>
+                    <mat-option value="F">Female</mat-option>
+                    <mat-option value="O">Others</mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="form.get('gender')?.hasError('required')">
+                      Required.
+                  </mat-error>
+              </mat-form-field>
+  
+  
+              <mat-form-field class="reduce" appearance="fill">
+                  <mat-label>Date of Birth</mat-label>
+                  <input matInput [max]="maxDate" [min]="minDate" [matDatepicker]="picker" formControlName="dateOfBirth" required>
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker  #picker></mat-datepicker>
+                  <mat-error *ngIf="form.get('dateOfBirth')?.hasError('required')">
+                    Required.
+                  </mat-error>
+              </mat-form-field>
+            </div>
+  
+  
+            
+            <div class="register-container">
+  
+              <mat-form-field  appearance="fill">
+                <mat-label>Address</mat-label>
+                <input matInput formControlName="address">
+                <mat-error *ngIf="form.get('address')?.hasError('required')">Required.</mat-error>
+              </mat-form-field>
+            
+              <mat-form-field class="rigt-side" appearance="fill">
+                <mat-label>Aadhar Number</mat-label>
+                <input matInput placeholder="0000-0000-0000" formControlName="govId">
+                <mat-error *ngIf="form.get('govId')?.hasError('required')"> Required.</mat-error>
+                <mat-error *ngIf="form.get('govId')?.hasError('pattern')|| form.get('govId')?.hasError('sameDigits')">Enter a valid Aadhar Number</mat-error>
+              </mat-form-field>
+            </div>
+  
+  
+  
+            <div class="register-container">
+             
+  
+  
+                <mat-form-field class = "together"appearance="fill" >
+                  <mat-label>State</mat-label>
+                  <mat-select formControlName="state"  (selectionChange)="onStateChange()" >
+                    <mat-option *ngFor="let item of states" [value]="item">{{ item.state_name }}</mat-option>
+  
+                  </mat-select>
+                  <mat-error *ngIf="form.get('state')?.hasError('required')">
+                     Required.
+                  </mat-error>
+                </mat-form-field>
+  
+                <mat-form-field class = "together"appearance="fill" >
+                  <mat-label>City</mat-label>
+                  <mat-select formControlName="city" >
+                    <mat-option *ngFor="let item of cities" value={{item.cityName}} >{{item.cityName}}</mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="form.get('city')?.hasError('required')">
+                       Required.
+                  </mat-error>
+                </mat-form-field>
+  
+  
+             
+                <mat-form-field  class="right-alone" appearance="fill">
+                  <mat-label>PIN Code</mat-label>
+                  <input matInput formControlName="pincode" >
+                  <mat-error *ngIf="form.get('pincode')?.hasError('required')"> Required.</mat-error>
+                  <mat-error *ngIf="form.get('pincode')?.hasError('pattern')||form.get('pincode')?.hasError('sameDigits')">Enter a valid PIN Code.</mat-error>
+                </mat-form-field>
+  
+              
+                
+            </div>
+  
+            <div>
+              <button class="submit-button" mat-raised-button color="primary" type="submit" >Next</button>
+            </div>    
+  
+        </form>
+      </mat-card-content>
+  
+  </mat-card>
+  
+  </body>

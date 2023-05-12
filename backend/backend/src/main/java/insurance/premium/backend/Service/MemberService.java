@@ -8,5 +8,6 @@ public interface MemberService {
     Member registerMember(Member member);
     Member getMemberByEmail(String email);
 
-    boolean login(LoginRequest loginRequest);
+    Boolean login(LoginRequest loginRequest);
 }
+

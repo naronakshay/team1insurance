@@ -1,28 +1,9 @@
 import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
-interface State{
-  state_id : number;
-  name: String;
-
-
-}
-
-interface City {
-
-  state_id:number;
-  city_id: number;
-  city_name: string;
-}
-
-interface Disease{
-  disease_id:number;
-  disease_name:string;
-
-}
-
-
+import { State } from './Entity/state';
+import { City } from './Entity/city';
+import { Disease } from './Entity/disease';
 
 
 
@@ -32,7 +13,7 @@ interface Disease{
 export class LookupService  {
 
  
-  private baseUrl = 'http://localhost:3000';
+  private baseUrl = 'http://localhost:8080/api/v1/member';
 
   constructor(private http: HttpClient) { }
   

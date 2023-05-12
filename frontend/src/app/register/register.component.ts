@@ -6,23 +6,16 @@ import { Router } from '@angular/router';
 import { LookupService } from '../lookup.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DataServiceService } from '../data-service.service';
+import { State } from '../Entity/state';
+import { City } from '../Entity/city';
+import { RegisterData } from '../Entity/registerData';
 
 
 
 
-interface City {
-  state_id:number;
-  city_id: number;
-  city_name: string;
-}
 
 
-interface State{
-  state_id : number;
-  name: String;
 
-
-}
 
 function sameDigitsValidator(control: FormControl) {
   const value = control.value;
@@ -47,31 +40,21 @@ export class RegisterComponent  implements OnInit  {
   maxDate = new Date();
   form!: FormGroup;
   isFormValid: boolean = false;
-  states!: any[];
-
-
-
-  
-  selectedState!: State;
+  states!: State[];
   cities!: City[];
  
+  
   
   
 
 
   constructor(private dataService: DataServiceService,private lookupService : LookupService,private router: Router,private dateAdapter: DateAdapter<Date>,private fb:FormBuilder) { 
 
-
-
-
     this.dateAdapter.setLocale('en-GB');
-
     const pastYear = this.maxDate.getFullYear() - 100;
     this.minDate = new Date();
     this.minDate.setFullYear(pastYear);
-
     this.form = this.fb.group({
-
     firstName : new FormControl('',[ Validators.required]),
     lastName :new FormControl('',[ Validators.required]),
     email:new FormControl('', [Validators.required,Validators.email,]),
@@ -94,39 +77,19 @@ export class RegisterComponent  implements OnInit  {
 
   ngOnInit(): void {
     
-    this.lookupService.getStates().subscribe((data: any[]) => {
-      this.states = data;
-
-
-      
+    this.lookupService.getStates().subscribe((data: State[]) => {
+      this.states = data;  
     });
-    
-
-
   }
     
    
-  
 
-
-  
-
-  
   onStateChange() {
-
-    const id =this.selectedState.state_id
-      this.lookupService.getCities(id).subscribe((data) => {
-      this.cities = data;
-      
-    });
-
     
-   
-
-    
-   
-
-
+    const stateId = this.form.get('state')?.value.id;
+    this.lookupService.getCities(stateId).subscribe((data:City[]) => {
+        this.cities = data;
+      }); 
 
   }
 
@@ -137,12 +100,8 @@ export class RegisterComponent  implements OnInit  {
  
   onSubmit(){
 
-    
-
-
-
     const formData = this.form.value;
-    const formData1 ={
+    const formData1 : RegisterData ={
           email: formData.email,
           firstName: formData.firstName,
           lastName: formData.lastName,
@@ -161,7 +120,6 @@ export class RegisterComponent  implements OnInit  {
    
    
     this.dataService.setRegisterData(formData1);
-  
     if (this.form.valid){
       this.router.navigate(['register2']);
       
