@@ -6,6 +6,8 @@ import insurance.premium.backend.Exceptions.MemberRegistrationException;
 import insurance.premium.backend.Service.MemberService;
 import insurance.premium.backend.security.JwtUtil;
 
+
+import org.kie.api.runtime.KieSession;
 import io.jsonwebtoken.JwtException;
 
 import org.slf4j.Logger;
@@ -17,6 +19,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -24,10 +32,16 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/v1/member")
 public class MemberController {
 
+    @Autowired
+   
+    private JwtUtil jwtUtil;
 
     @Autowired
+
     private MemberService memberService;
     @Autowired
+    
+    private PolicyService policyService;
     private JwtUtil jwtUtil;
 
     Logger memberLogger = LoggerFactory.getLogger(MemberController.class);

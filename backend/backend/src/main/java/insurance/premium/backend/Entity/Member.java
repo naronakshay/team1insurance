@@ -1,13 +1,21 @@
-package insurance.premium.backend.Entity;
+package insurance.premium.backend.entity;
 
-import jakarta.persistence.*;
+import java.time.LocalDate;
+import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
-import java.util.Date;
+/**
+ * Represents a member of an insurance plan.
+ */
 @Getter
 @Setter
 @AllArgsConstructor
@@ -16,53 +24,87 @@ import java.util.Date;
 @Table(name = "member_table")
 public class Member {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_id")
-    private int memberId;
+  /**
+   * The unique ID for this member.
+   */
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "member_id")
+  private int memberId;
 
-    @Column(name = "email")
-    private String email;
+  /**
+   * The email address of this member.
+   */
+  @Column(name = "email")
+  private String email;
 
-    @Column(name = "first_name")
-    private String firstName;
+  /**
+   * The first name of this member.
+   */
+  @Column(name = "first_name")
+  private String firstName;
 
-    @Column(name = "last_name")
-    private String lastName;
+  /**
+   * The last name of this member.
+   */
+  @Column(name = "last_name")
+  private String lastName;
 
-    @Column(name = "gov_id")
-    private String govId;
+  /**
+   * The government ID of this member.
+   */
+  @Column(name = "gov_id")
+  private String govId;
 
+  /**
+   * The phone number of this member.
+   */
+  @Column(name = "phone_number")
+  private String phoneNumber;
 
-    @Column(name = "phone_number")
-    private String phoneNumber;
+  /**
+   * The gender of this member.
+   */
+  @Column(name = "gender")
+  private String gender;
 
-    @Column(name = "gender")
-    private String gender;
+  /**
+   * The date of birth of this member.
+   */
+  @Column(name = "dob")
+  private Date dob;
 
-    @Column(name = "dob")
-    private Date dob;
+  /**
+   * The state where this member resides.
+   */
+  @Column(name = "state")
+  private String state;
 
-    @Column(name="state")
-    private String state;
+  /**
+   * Whether this member uses tobacco.
+   */
+  @Column(name = "is_tobacco_user")
+  private Boolean isTobaccoUser = false;
 
+  /**
+   * The city where this member resides.
+   */
+  @Column(name = "city")
+  private String city;
 
-    @Column(name = "is_tobacco_user")
-    private Boolean isTobaccoUser= false;;
+  /**
+   * The postal code of this member's address.
+   */
+  @Column(name = "pin_code")
+  private String pinCode;
 
-    @Column(name = "city")
-    private String city;
+  /**
+   * The address of this member.
+   */
+  @Column(name = "address")
+  private String address;
 
-    @Column(name = "pin_code")
-    private String pinCode;
-
-    @Column(name = "address")
-    private String address;
-
-    @Column(name = "illness_Details")
-    private String illnessDetails;
-
-    @Column(name = "password")
-    private String password;
-
-}
+  /**
+   * Details of any illnesses this member has.
+   */
+  @Column(name = "illness_details")

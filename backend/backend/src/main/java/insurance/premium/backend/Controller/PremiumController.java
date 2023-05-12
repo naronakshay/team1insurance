@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+//enable cross-origin request from localhost:4200
 @CrossOrigin(origins = "http://localhost:4200")
+
+// Map requests with /api/v1/member to this controller
 @RestController
 @RequestMapping("api/v1/member")
 public class PremiumController {

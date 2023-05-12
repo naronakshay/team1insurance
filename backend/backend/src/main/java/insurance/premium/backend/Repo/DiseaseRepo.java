@@ -9,8 +9,10 @@ import java.util.List;
 
 @Repository
 public interface DiseaseRepo extends JpaRepository<Disease, Integer> {
-
+     // Get all diseases
     List<Disease> findAll();
+    
+    // Find disease by name
     Disease findByDiseaseName(String diseaseName);
 
 

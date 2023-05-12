@@ -12,6 +12,12 @@ import java.util.List;
 @Repository
 public interface PlansRepo extends JpaRepository<Plan, Integer> {
     List<Plan> findAll();
+    /**
+   * Finds a plan by its type.
+   *
+   * @param planType the type of the plan to find
+   * @return the plan with the specified type, or null if not found
+   */
 
     Plan findByPlanType(String planType);
 
