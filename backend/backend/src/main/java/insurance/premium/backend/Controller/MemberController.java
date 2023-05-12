@@ -10,6 +10,8 @@ import insurance.premium.backend.Repo.MemberRepo;
 import insurance.premium.backend.Service.MemberService;
 import insurance.premium.backend.Service.PolicyService;
 import insurance.premium.backend.security.JwtUtil;
+
+
 import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -20,12 +22,10 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.ArrayList;
-
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.Date;
-
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -34,11 +34,15 @@ import java.util.List;
 public class MemberController {
 
     @Autowired
+   
     private JwtUtil jwtUtil;
+
     @Autowired
+
     private MemberService memberService;
 
     @Autowired
+    
     private PolicyService policyService;
 
     //register the new user into the database

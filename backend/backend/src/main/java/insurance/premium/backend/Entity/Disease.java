@@ -18,7 +18,7 @@ public class Disease {
 
     @Column(name="additional_premium")
     double additional_premium;
-
+    //Getters and setters
     public int getDisease_id() {
         return disease_id;
     }
@@ -38,6 +38,7 @@ public class Disease {
     public double getAdditional_premium() {
         return additional_premium;
     }
+    
 
     public void setAdditional_premium(double additional_premium) {
         this.additional_premium = additional_premium;

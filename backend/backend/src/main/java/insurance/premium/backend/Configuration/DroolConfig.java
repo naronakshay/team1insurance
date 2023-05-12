@@ -24,7 +24,7 @@ public class DroolConfig {
         kieFileSystem.write(ResourceFactory.newClassPathResource("policy.drl"));
         return kieFileSystem;
 
-    }
+         }
 
     @Bean
     public KieContainer getKieContainer() throws IOException {
@@ -35,8 +35,7 @@ public class DroolConfig {
         KieModule kieModule = kb.getKieModule();
         KieContainer kContainer = kieServices.newKieContainer(kieModule.getReleaseId());
         return kContainer;
-
-    }
+}
 
     private void getKieRepository() {
         final KieRepository kieRepository = kieServices.getRepository();
@@ -44,7 +43,7 @@ public class DroolConfig {
             public ReleaseId getReleaseId() {
                 return kieRepository.getDefaultReleaseId();
             }
-        });
+            });
     }
 
     @Bean
@@ -54,4 +53,4 @@ public class DroolConfig {
 
     }
 
-}
+    }
