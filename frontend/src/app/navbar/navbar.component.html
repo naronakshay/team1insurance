@@ -8,6 +8,14 @@
     <a mat-button [routerLink]="disableLink ? null : '/'">INSURANCE</a>
 
 
+    <div class="spacer"></div>
+    <button mat-button *ngIf="showButton"  (click)="moveTo()">LOGIN</button>
+    <button mat-button *ngIf="showButton2"  (click)="moveTo2()">LOGOUT</button>
+    <button mat-button (click)="moveTo3()">ABOUT US  </button>
+   
+</mat-toolbar>
+
+
   <div class="spacer"></div>
   <button mat-button *ngIf="showButton"  (click)="moveTo()">LOGIN</button>
   <button mat-button *ngIf="showButton2"  (click)="moveTo2()">LOGOUT</button>

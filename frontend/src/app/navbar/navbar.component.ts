@@ -29,5 +29,9 @@ export class NavbarComponent {
     this.router.navigate(['login']);
   }
 
+  moveTo3(){
+    this.router.navigate(['aboutus']);
+  }
+
 
 }
