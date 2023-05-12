@@ -9,6 +9,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MemberRepo extends JpaRepository<Member,String> {
 
+     /**
+     * Find a member by email.
+     *
+     * @param email the email of the member to find
+     * @return the member with the given email, or null if not found
+     */
+
     Member findByEmail(String email);
 
 
